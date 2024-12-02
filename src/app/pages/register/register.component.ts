@@ -1,11 +1,102 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { fadeAnimation } from '../../widgets/animations/fade.animation';
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    ButtonModule,
+    FloatLabelModule,
+    CheckboxModule
+  ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  providers: [MessageService],
+  animations: [fadeAnimation]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
+  registerForm: FormGroup;
+  showPassword = false;
+  showConfirmPassword = false;
+
+  constructor(
+    private messageService: MessageService
+  ) {
+    this.registerForm = new FormGroup({
+      fullName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
+        Validators.required,
+        this.passwordComplexityValidator()
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        this.passwordMatchValidator()
+      ])
+    });
+
+    // Add a listener to revalidate confirm password when password changes
+    this.registerForm.get('password')?.valueChanges.subscribe(() => {
+      this.registerForm.get('confirmPassword')?.updateValueAndValidity();
+    });
+  }
+
+  ngOnInit() {
+  }
+  // Custom validator for password complexity
+  passwordComplexityValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      const lengthValid = value && value.length >= 6;
+      const numberValid = /\d/.test(value);
+      const specialCharValid = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value);
+
+      return lengthValid && numberValid && specialCharValid
+        ? null
+        : {
+          passwordComplexity: {
+            lengthValid,
+            numberValid,
+            specialCharValid
+          }
+        };
+    };
+  }
+
+  passwordMatchValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const password = this.registerForm?.get('password')?.value;
+      const confirmPassword = control.value;
+
+      return password === confirmPassword ? null : { 'passwordMismatch': true };
+    };
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
+  isFormValid() {
+    return this.registerForm.invalid;
+  }
+
+  onSubmit() {
+    console.log(this.registerForm.value);
+
+  }
 }

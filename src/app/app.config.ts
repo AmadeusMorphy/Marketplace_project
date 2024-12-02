@@ -7,6 +7,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ToastModule } from 'primeng/toast';
+import { MenuModule } from 'primeng/menu';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,8 +18,12 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideAnimations(),
     provideHttpClient(),
+    provideClientHydration(),
     ButtonModule,
     InputTextModule,
-    FloatLabelModule
+    FloatLabelModule,
+    CheckboxModule,
+    ToastModule,
+    MenuModule
   ]
 };
