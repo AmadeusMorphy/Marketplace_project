@@ -1,0 +1,16 @@
+@import "primeflex/primeflex.css";
+@import "primeng/resources/themes/lara-light-purple/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@font-face {
+    font-family: nzd;
+    src: url('./assets/Parkinsans-VariableFont_wght.ttf');
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: nzd;
+}
+
