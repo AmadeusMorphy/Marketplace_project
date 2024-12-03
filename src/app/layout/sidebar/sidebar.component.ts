@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isLoggingOut = false;
   isAuthenticated = false;
 
-  isUser = false;
+  isCustomer = false;
   isAdmin = false;
   isMerchant = false;
 
@@ -71,16 +71,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
       if(this.isAuthenticated) {
         if(userType === 'admin') {
           this.isAdmin = true;
-          this.isUser = false;
+          this.isCustomer = false;
           this.isMerchant = false;
         }
         if(userType === 'merchant') {
           this.isMerchant = true;
           this.isAdmin = false;
-          this.isUser = false;
+          this.isCustomer = false;
         }
-        if(userType === 'user') {
-          this.isUser = true;
+        if(userType === 'customer') {
+          this.isCustomer = true;
           this.isAdmin = false;
           this.isMerchant = false;
         }
@@ -104,7 +104,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this._authService.onLogout().subscribe(
       () => {
         this.isLoggingOut = false;
-        this.isUser = false;
+        this.isCustomer = false;
         this.isAdmin = false;
         this.isMerchant = false;
         this.checkUser();

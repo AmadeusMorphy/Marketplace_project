@@ -69,9 +69,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
 
       const userType = localStorage.getItem('userType');
-      console.log(userType);
-      
-      console.log(this.isAuthenticated);
       
       if(this.isAuthenticated && userType == 'admin') {
         this.isAdmin = true;
@@ -80,7 +77,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.isAdmin = false;
         this._cdr.detectChanges();
       }
-      console.log("Is admin: ", this.isAdmin);
 
     if(this.isAuthenticated) {
       this.items = [

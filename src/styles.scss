@@ -23,6 +23,18 @@ button {
     transition: .2s ease-in-out;
 }
 
+.add-to-cart-btn {
+    background: #f5f5f7;
+    color: #6928ff;
+    border: 1px solid;
+    transition: .1s ease-in-out;
+}
+
+.add-to-cart-btn:hover {
+    background: #6928ff;
+    color: #f5f5f7;
+}
+
 // h1,
 // h2,
 // h3 {
