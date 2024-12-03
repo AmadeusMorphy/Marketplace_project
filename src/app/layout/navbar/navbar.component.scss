@@ -1,3 +1,8 @@
+nav {
+    padding: 15px
+}
+
+
 .menuItem {
     cursor: pointer;
     transition: .2s ease-in-out;
@@ -5,4 +10,13 @@
 
 .menuItem:hover {
     color: rgb(194, 194, 194);
+}
+
+.profBtn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

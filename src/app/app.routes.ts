@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
-import { authGuard } from './auth/auth.guard';
+// import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -19,5 +19,5 @@ export const routes: Routes = [
                 path: 'register', loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
             }
         ]
-    }
+    },
 ];

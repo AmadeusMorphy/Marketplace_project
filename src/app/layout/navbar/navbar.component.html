@@ -9,6 +9,8 @@
     <div class="profile">
         <p-toast />
         <p-menu #menu [model]="items" [popup]="true" />
-        <p-button (onClick)="menu.toggle($event)" icon="pi pi-user" />
+        <button pButton class="profBtn" (click)="showSideBar()" [icon]="isAdmin ? 'pi pi-align-justify' : 'pi pi-user'"></button>
     </div>
 </nav>
+
+<app-sidebar [sideBarVisible]="sideBarVisible" (isSideBarHidden)="hideSideBar()"></app-sidebar>

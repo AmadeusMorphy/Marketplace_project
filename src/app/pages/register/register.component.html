@@ -24,22 +24,22 @@
                 <div class="eyeBtn cursor-pointer" (click)="togglePasswordVisibility()">
                     <i class="pi pi-eye"></i>
                 </div>
-                <small
+                <!-- <small
                     *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched"
                     class="p-error">
                     Password is required
-                </small>
+                </small> -->
                 <small
                     *ngIf="registerForm.get('password')?.hasError('passwordComplexity') && registerForm.get('password')?.touched"
                     class="p-error">
-                    <div *ngIf="registerForm.get('password')?.errors?.['passwordComplexity'] as complexity">
+                    <!-- <div *ngIf="registerForm.get('password')?.errors?.['passwordComplexity'] as complexity">
                         Password must:
                         <ul>
                             <li *ngIf="!complexity.lengthValid">Be at least 6 characters long</li>
                             <li *ngIf="!complexity.numberValid">Contain at least 1 number</li>
                             <li *ngIf="!complexity.specialCharValid">Contain at least 1 special character</li>
                         </ul>
-                    </div>
+                    </div> -->
                 </small>
             </div>
 
@@ -52,11 +52,11 @@
                 <div class="eyeBtn cursor-pointer" (click)="toggleConfirmPasswordVisibility()">
                     <i class="pi pi-eye"></i>
                 </div>
-                <small
+                <!-- <small
                     *ngIf="registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched"
                     class="p-error">
                     Passwords must match
-                </small>
+                </small> -->
             </div>
 
             <div class="footer">

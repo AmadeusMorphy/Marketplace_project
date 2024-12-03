@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(private _httpClient: HttpClient, private _router: Router) { }
 
@@ -23,8 +26,7 @@ export class AuthService {
         localStorage.setItem('userId', User.id);
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
-        console.log("Logged successfully: ", res);
-        this._router.navigate(['/home']);
+        this.isAuthenticatedSubject.next(true);
       }, (error) => {
         console.error("Error stuff: ", error);
       }
@@ -43,5 +45,29 @@ export class AuthService {
       }
       )
     )
+  }
+
+  onLogout(): Observable<any> {
+
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    })
+    return this._httpClient.post(`${environment.serverAuth}logout`, {}, { headers }).pipe(
+      tap((res: any) => {
+        localStorage.clear();
+        console.log("Logged out: ", res);
+        this.isAuthenticatedSubject.next(false);
+        this._router.navigate(['/home']);
+      }, (error) => {
+        console.error("Error stuff: ", error);
+      })
+    )
+  }
+
+
+  async updateAuthState(isAuthenticated: boolean) {
+    this.isAuthenticatedSubject.next(isAuthenticated);
   }
 }

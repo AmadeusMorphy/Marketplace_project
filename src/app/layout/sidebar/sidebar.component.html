@@ -1,0 +1,309 @@
+<p-sidebar #sidebarRef [(visible)]="sideBarVisible" position="right" (onHide)="onHide()">
+    <ng-template pTemplate="headless">
+        <div class="flex flex-column h-full">
+            <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
+                <span class="inline-flex align-items-center gap-2">
+
+                    <span class="font-semibold text-2xl text-primary">Your Logo</span>
+                </span>
+                <span>
+                    <p-button type="button" (onClick)="closeCallback($event)" icon="pi pi-times" rounded="true"
+                        outlined="true" styleClass="h-2rem w-2rem"></p-button>
+                </span>
+            </div>
+
+            <!--NO USER-->
+            <div *ngIf="!isAuthenticated" class="overflow-y-auto flex flex-column justify-content-between">
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li (click)="onLogin()">
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-user mr-2"></i>
+                                    <span class="font-medium">Login</span>
+                                </a>
+                            </li>
+                            <li (click)="onRegister()">
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-user-plus mr-2"></i>
+                                    <span class="font-medium">Register</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!------------>
+
+            <!--USER-->
+       
+            <div *ngIf="isUser" class="overflow-y-auto flex flex-column justify-content-between h-full">
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <div class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
+                            <span class="font-medium">User</span>
+                        </div>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-home mr-2"></i>
+                                    <span class="font-medium">Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-heart mr-2"></i>
+                                    <span class="font-medium">Favorites</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-sparkles mr-2"></i>
+                                    <span class="font-medium">Wishlist</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-history mr-2"></i>
+                                    <span class="font-medium">History</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-check-circle mr-2"></i>
+                                    <span class="font-medium">Become a merchant!</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li (click)="onLogout()">
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="mr-2" [ngClass]="isLoggingOut ? 'pi pi-spin pi-spinner' : 'pi pi-sign-out'"></i>
+                                    <span class="font-medium">{{ isLoggingOut ? 'Logging out...' : 'Logout'}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!--ADMIN-->
+
+            <div *ngIf="isAdmin" class="overflow-y-auto flex flex-column h-full justify-content-between">
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <div 
+                            class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
+                            <span class="font-medium">Admin</span>
+                        </div>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-home mr-2"></i>
+                                    <span class="font-medium">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-box mr-2"></i>
+                                    <span class="font-medium">Products</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-users mr-2"></i>
+                                    <span class="font-medium">Merchants</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-comments mr-2"></i>
+                                    <span class="font-medium">Messages</span>
+                                    <span
+                                        class="inline-flex align-items-center justify-content-center ml-auto bg-primary border-circle"
+                                        style="min-width: 1.5rem; height: 1.5rem">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-calendar mr-2"></i>
+                                    <span class="font-medium">Calendar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-cog mr-2"></i>
+                                    <span class="font-medium">Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li (click)="onLogout()">
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="mr-2" [ngClass]="isLoggingOut ? 'pi pi-spin pi-spinner' : 'pi pi-sign-out'"></i>
+                                    <span class="font-medium">{{ isLoggingOut ? 'Logging out...' : 'Logout'}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!--MERCHANT-->
+
+            <div *ngIf="isMerchant" class="overflow-y-auto flex flex-column h-full justify-content-between">
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <div 
+                            class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
+                            <span class="font-medium">Merchant</span>
+                        </div>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-home mr-2"></i>
+                                    <span class="font-medium">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-box mr-2"></i>
+                                    <span class="font-medium">Products</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple pStyleClass="@next" enterFromClass="hidden" enterActiveClass="slidedown"
+                                    leaveToClass="hidden" leaveActiveClass="slideup"
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-chart-line mr-2"></i>
+                                    <span class="font-medium">Reports</span>
+                                    <i class="pi pi-chevron-down ml-auto"></i>
+                                </a>
+                                <ul
+                                    class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
+                                    <li>
+                                        <a pRipple pStyleClass="@next" enterFromClass="hidden"
+                                            enterActiveClass="slidedown" leaveToClass="hidden"
+                                            leaveActiveClass="slideup"
+                                            class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                            <i class="pi pi-chart-line mr-2"></i>
+                                            <span class="font-medium">Revenue</span>
+                                            <i class="pi pi-chevron-down ml-auto"></i>
+                                        </a>
+                                        <ul
+                                            class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out">
+                                            <li>
+                                                <a pRipple
+                                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                                    <i class="pi pi-table mr-2"></i>
+                                                    <span class="font-medium">View</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a pRipple
+                                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                                    <i class="pi pi-search mr-2"></i>
+                                                    <span class="font-medium">Search</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a pRipple
+                                            class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                            <i class="pi pi-chart-line mr-2"></i>
+                                            <span class="font-medium">Expenses</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-users mr-2"></i>
+                                    <span class="font-medium">Team</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-comments mr-2"></i>
+                                    <span class="font-medium">Messages</span>
+                                    <span
+                                        class="inline-flex align-items-center justify-content-center ml-auto bg-primary border-circle"
+                                        style="min-width: 1.5rem; height: 1.5rem">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-calendar mr-2"></i>
+                                    <span class="font-medium">Calendar</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="pi pi-cog mr-2"></i>
+                                    <span class="font-medium">Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="list-none p-3 m-0">
+                    <li>
+                        <ul class="list-none p-0 m-0 overflow-hidden">
+                            <li (click)="onLogout()">
+                                <a pRipple
+                                    class="flex align-items-center cursor-pointer gap-2 p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                                    <i class="mr-2" [ngClass]="isLoggingOut ? 'pi pi-spin pi-spinner' : 'pi pi-sign-out'"></i>
+                                    <span class="font-medium">{{ isLoggingOut ? 'Logging out...' : 'Logout'}}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!------------>
+
+
+            <!--------->
+            <div class="mt-auto">
+                <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
+                <a pRipple
+                    class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
+                    <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+                        shape="circle" />
+                    <span class="font-bold">Amy Elsner</span>
+                </a>
+            </div>
+        </div>
+    </ng-template>
+</p-sidebar>

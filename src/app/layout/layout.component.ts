@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { RouterOutlet } from '@angular/router';
 import { fadeAnimation } from '../widgets/animations/fade.animation';
