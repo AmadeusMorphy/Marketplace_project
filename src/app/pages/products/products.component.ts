@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
+import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -10,8 +10,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductsComponent implements OnInit{
-
+export class ProductsComponent {
   products: any;
 
   constructor(
@@ -21,7 +20,7 @@ export class ProductsComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    this.getProducts();
+
   }
 
 

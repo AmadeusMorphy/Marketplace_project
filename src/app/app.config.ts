@@ -33,4 +33,5 @@ export const appConfig: ApplicationConfig = {
     AvatarModule,
     StyleClassModule
   ]
+
 };

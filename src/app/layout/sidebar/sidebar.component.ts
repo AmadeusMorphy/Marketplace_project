@@ -7,7 +7,7 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AuthService } from '../../auth/auth.service';
 import { Subject, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
     RippleModule,
     AvatarModule,
     StyleClassModule,
+    RouterLink
 ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
@@ -130,4 +131,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this._cdr.detectChanges();
     }
   }
+
+
+  /*******ROUTES*******/
+
+public MERCHANT_DASHBOARD = '/merchant/merchant-dashboard';
+public MERCHANT_STORE = '/merchant/merchant-store';
+public MERCHANT_PRODUCTS = '/merchant/merchant-products';
+public MERCHANT_SETTINGS = '/merchant/merchant-settings';
+public MERCHANT_ADD_PRODUCT = '/merchant/merchant-add-product';
 }

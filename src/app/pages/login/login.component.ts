@@ -58,7 +58,7 @@ export class LoginComponent {
         })
 
         setTimeout(() => {
-          this._router.navigate(['/home']);
+          this._router.navigate(['/']);
         }, 1300);
       }, () => {
         this.isLoggingIn = false;
