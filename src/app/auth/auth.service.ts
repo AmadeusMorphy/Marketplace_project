@@ -38,7 +38,19 @@ export class AuthService {
     return this._httpClient.post(`${environment.serverAuth}register`, registerForm).pipe(
       tap((res: any) => {
         console.log("successfully registered: ", res);
-        this._router.navigate(['/login'])
+        // this._router.navigate(['/login'])
+      }, (error) => {
+        console.error("Error stuff: ", error);
+
+      }
+      )
+    )
+  }
+
+  onMerchantRegister(registerForm: any, headers: any): Observable<any> {
+    return this._httpClient.post(`${environment.server}merchants/profile`, registerForm, { headers }).pipe(
+      tap((res: any) => {
+        console.log("successfully registered: ", res);
       }, (error) => {
         console.error("Error stuff: ", error);
 

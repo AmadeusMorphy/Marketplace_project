@@ -3,7 +3,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MERCHANT_ROUTES } from './pages/merchant/merchant.routes';
 import { NgModule } from '@angular/core';
-import { MerchantComponent } from './pages/merchant/merchant.component';
 // import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
@@ -20,6 +19,9 @@ export const routes: Routes = [
             },
             {
                 path: 'register', loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
+            },
+            {
+                path: 'merchant-register', loadComponent: () => import('./pages/merchant-register/merchant-register.component').then(m => m.MerchantRegisterComponent)
             },
             {
                 path: 'merchant',

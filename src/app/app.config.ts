@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, Router } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { routes } from './app.routes';
@@ -13,11 +13,17 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { AvatarModule } from 'primeng/avatar';
 import { StyleClassModule } from 'primeng/styleclass';
+import { DropdownModule} from 'primeng/dropdown'
+import { ChartModule } from 'primeng/chart';
+import { TableModule } from 'primeng/table';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    importProvidersFrom(ChartModule),
     provideClientHydration(withEventReplay()),
     provideAnimations(),
     provideHttpClient(withFetch()),
@@ -31,7 +37,11 @@ export const appConfig: ApplicationConfig = {
     MenuModule,
     SidebarModule,
     AvatarModule,
-    StyleClassModule
+    StyleClassModule,
+    DropdownModule,
+    TableModule,
+    TabMenuModule,
+    ConfirmPopupModule
   ]
 
 };

@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { MerchantComponent } from "./merchant.component";
-import { ADD_PRODUCT, DASHBOARD, PRODUCTS, SETTINGS, STORE } from "./merchant.constants";
+import { ADD_PRODUCT, DASHBOARD, MESSAGES, PRODUCTS, SETTINGS, STORE } from "./merchant.constants";
 
 
 export const MERCHANT_ROUTES: Routes = [
@@ -22,12 +22,16 @@ export const MERCHANT_ROUTES: Routes = [
                 loadComponent: () => import('./merchant-products/merchant-products.component').then(m => m.MerchantProductsComponent)
             },
             {
-                path: SETTINGS,
-                loadComponent: () => import('./merchant-settings/merchant-settings.component').then(m => m.MerchantSettingsComponent)
-            },
-            {
                 path: ADD_PRODUCT,
                 loadComponent: () => import('./merchant-products/merchant-add-product/merchant-add-product.component').then(m => m.MerchantAddProductComponent)
+            },
+            {
+                path: MESSAGES,
+                loadComponent: () => import('./merchant-messages/merchant-messages.component').then(m => m.MerchantMessagesComponent)
+            },
+            {
+                path: SETTINGS,
+                loadComponent: () => import('./merchant-settings/merchant-settings.component').then(m => m.MerchantSettingsComponent)
             }
         ]
     }

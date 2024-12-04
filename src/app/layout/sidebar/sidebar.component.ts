@@ -99,6 +99,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this._router.navigate(['/register']);
   }
 
+  onMerchantRegister() {
+    this.onHide();
+    this._router.navigate(['/merchant-register']);
+  }
+
   onLogout() {
     this.isLoggingOut = true;
 
