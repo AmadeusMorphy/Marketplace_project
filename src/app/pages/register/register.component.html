@@ -61,9 +61,11 @@
 
             <div class="footer">
                 <div class="btn">
-                    <p-button [disabled]="isFormValid()" type="submit" label="Create account" />
+                    <p-button [disabled]="isFormValid()" type="submit" [label]="isRegistering ? 'Registering...' : 'Create account'" [loading]="isRegistering"/>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<p-toast></p-toast>

@@ -23,11 +23,96 @@ export class MerchantDashboardComponent {
   transactions: any;
   chartOptions: any;
 
+  lineData: any;
+  lineOptions: any;
+  pieData: any;
+  pieOptions: any;
   ngOnInit() {
     this.initializeSalesData();
     this.initializeRevenueData();
     this.initializeTransactions();
     this.initializeChartOptions();
+
+    this.lineData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          type: 'line',
+          label: 'Apple',
+          borderColor: '#8BA9FF',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.4,
+          data: [4000, 3000, 2000, 5000, 7000, 6000, 8000]
+        },
+        {
+          type: 'bar',
+          label: 'Samsung',
+          backgroundColor: '#A8DFC1',
+          data: [3000, 4000, 5000, 3000, 2000, 4000, 5000],
+          borderColor: '#67e09e',
+          borderWidth: 2
+        },
+        {
+          type: 'bar',
+          label: 'Nike',
+          backgroundColor: '#66D2D6',
+          data: [2000, 1000, 4000, 3000, 5000, 4000, 3000]
+        }
+      ]
+    };
+    
+    this.lineOptions = {
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      plugins: {
+        legend: {
+          labels: {
+            color: '#444444' // Darker gray for legend text
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#333333' // Darker gray for x-axis labels
+          },
+          grid: {
+            color: '#CCCCCC' // Light gray gridlines
+          }
+        },
+        y: {
+          ticks: {
+            color: '#333333' // Darker gray for y-axis labels
+          },
+          grid: {
+            color: '#CCCCCC' // Light gray gridlines
+          }
+        }
+      }
+    };
+
+    this.pieData = {
+      labels: ['Merchant A', 'Merchant B', 'Merchant C'],
+      datasets: [
+        {
+          data: [54000, 32500, 70200],
+          backgroundColor: ['#9BAEDB', '#FFD866', '#88D4B1'],
+          hoverBackgroundColor: ['#8197C7', '#FFC247', '#70B899']
+        }
+      ]
+    };
+    
+    this.pieOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: '#4A5568'
+          }
+        }
+      }
+    };
   }
 
   initializeSalesData() {

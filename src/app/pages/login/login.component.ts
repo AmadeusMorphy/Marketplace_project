@@ -49,7 +49,9 @@ export class LoginComponent {
     console.log(this.loginForm.value);
     
     this._authService.onLogin(this.loginForm.value).subscribe(
-      () => {
+      (res: any) => {
+        console.log("Logged:", res);
+        
         this.isLoggingIn = false;
         this._messagesService.add({
           severity: 'success',
@@ -57,9 +59,19 @@ export class LoginComponent {
           detail: 'Logged in successfully!'
         })
 
-        setTimeout(() => {
-          this._router.navigate(['/']);
-        }, 1300);
+        if(res.user.userType === 'customer') {
+          setTimeout(() => {
+            this._router.navigate(['/']);
+          }, 1300);
+        } else if(res.user.userType === 'merchant') {
+          setTimeout(() => {
+            this._router.navigate(['/merchant/merchant-dashboard']);
+          }, 1300);
+        } else if(res.user.userType === 'admin') {
+          setTimeout(() => {
+            this._router.navigate(['/']);
+          }, 1300);
+        }
       }, () => {
         this.isLoggingIn = false;
         this._messagesService.add({

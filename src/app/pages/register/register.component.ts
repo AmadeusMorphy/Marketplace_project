@@ -7,6 +7,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
+import { AuthService } from '../../auth/auth.service';
+import { ToastModule } from 'primeng/toast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +20,8 @@ import { fadeAnimation } from '../../widgets/animations/fade.animation';
     InputTextModule,
     ButtonModule,
     FloatLabelModule,
-    CheckboxModule
+    CheckboxModule,
+    ToastModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
@@ -29,13 +33,18 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   showPassword = false;
   showConfirmPassword = false;
+  isRegistering = false;
 
   constructor(
-    private messageService: MessageService
+    private _messageService: MessageService,
+    private _authService: AuthService,
+    private _router: Router,
+    private _cdr: ChangeDetectorRef
   ) {
     this.registerForm = new FormGroup({
       fullName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
+      userType: new FormControl('customer'),
       password: new FormControl('', [
         Validators.required,
         this.passwordComplexityValidator()
@@ -96,7 +105,29 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    this.isRegistering = true;
 
+    this._authService.onRegister(this.registerForm.value).subscribe(
+      () => {
+        this.registerForm.reset();
+        this.isRegistering = false;
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Registered successfully!',
+        })
+
+        setTimeout(() => {
+          this._router.navigate(['/login']);
+        }, 1300);
+      }, () =>   {
+        this.isRegistering = false;
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Something wrong happened!',
+        })
+      }
+    )
   }
 }

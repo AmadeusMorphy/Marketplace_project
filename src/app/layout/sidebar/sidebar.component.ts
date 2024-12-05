@@ -39,6 +39,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAdmin = false;
   isMerchant = false;
 
+  userName: any;
+  userType: any;
+  token: any;
+
   constructor(
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
@@ -66,21 +70,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   checkUser() {
     if(isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token');
-      const userType = localStorage.getItem('userType');
+      this.token = localStorage.getItem('token');
+      this.userType = localStorage.getItem('userType');
+      this.userName = localStorage.getItem('fullName');
 
       if(this.isAuthenticated) {
-        if(userType === 'admin') {
+        if(this.userType === 'admin') {
           this.isAdmin = true;
           this.isCustomer = false;
           this.isMerchant = false;
         }
-        if(userType === 'merchant') {
+        if(this.userType === 'merchant') {
           this.isMerchant = true;
           this.isAdmin = false;
           this.isCustomer = false;
         }
-        if(userType === 'customer') {
+        if(this.userType === 'customer') {
           this.isCustomer = true;
           this.isAdmin = false;
           this.isMerchant = false;
@@ -133,6 +138,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     if(this.isAuthSupscription) {
       this.isAuthSupscription.unsubscribe();
+      this.userName = null;
+      this.userType = null;
+      this.token = null;
       this._cdr.detectChanges();
     }
   }

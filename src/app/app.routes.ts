@@ -29,6 +29,7 @@ export const routes: Routes = [
             }
         ]
     },
+    { path: '**', loadComponent: () => import('./pages/error/error.component').then(m => m.ErrorComponent) },
 ];
 
 @NgModule({

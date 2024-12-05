@@ -26,6 +26,7 @@ export class AuthService {
         localStorage.setItem('userId', User.id);
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
+        localStorage.setItem('fullName', User.fullName);
         this.isAuthenticatedSubject.next(true);
       }, (error) => {
         console.error("Error stuff: ", error);
@@ -38,10 +39,8 @@ export class AuthService {
     return this._httpClient.post(`${environment.serverAuth}register`, registerForm).pipe(
       tap((res: any) => {
         console.log("successfully registered: ", res);
-        // this._router.navigate(['/login'])
       }, (error) => {
         console.error("Error stuff: ", error);
-
       }
       )
     )

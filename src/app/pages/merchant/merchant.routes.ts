@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { MerchantComponent } from "./merchant.component";
 import { ADD_PRODUCT, DASHBOARD, MESSAGES, PRODUCTS, SETTINGS, STORE } from "./merchant.constants";
+import { authGuard } from "../../auth/auth.guard";
 
 
 export const MERCHANT_ROUTES: Routes = [
@@ -8,6 +9,7 @@ export const MERCHANT_ROUTES: Routes = [
     {
         path: '',
         component: MerchantComponent,
+        canActivate: [authGuard],
         children: [
             {
                 path: DASHBOARD,

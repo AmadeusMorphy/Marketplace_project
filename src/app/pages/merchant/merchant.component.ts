@@ -1,12 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopup, ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ButtonModule } from 'primeng/button';
+import { MerchantService } from './merchant.service';
 
 @Component({
   selector: 'app-merchant',
@@ -27,32 +28,45 @@ export class MerchantComponent implements OnInit {
 
   items: MenuItem[] | undefined;
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {}
-
-    @ViewChild(ConfirmPopup) confirmPopup!: ConfirmPopup;
-
-    accept() {
-        this.confirmPopup.accept();
-    }
-
-    reject() {
-        this.confirmPopup.reject();
-    }
-
-    confirm(event: Event) {
-        this.confirmationService.confirm({
-            target: event.target as EventTarget,
-            message: 'Save your current process?',
-            accept: () => {
-                this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-            },
-            reject: () => {
-                this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-            }
-        });
-    }
+  constructor( 
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private _router: Router,
+    private _cdr: ChangeDetectorRef,
+    private _merchantService: MerchantService
+  ) {}
 
   ngOnInit() {
+
+    if(isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      const userType = localStorage.getItem('userType');
+
+      if(token && (userType === 'merchant')) {
+
+        this.getMerchantData();
+        this.loadMenuBar();
+        this._cdr.detectChanges();
+      } else {
+      this._router.navigate(['/404']);
+      }
+    }
+  }
+
+  getMerchantData() {
+   this._merchantService.getMerchantProfile().subscribe(
+    (res: any) => {
+      console.log(res);
+
+      this._merchantService.getMerchantStores().subscribe(
+        (res: any) => {
+        console.log("store", res);
+        }
+      )
+    }
+   )
+  }
+
+  loadMenuBar() {
     this.items = [
       {
         label: 'Dashboard',
@@ -78,17 +92,7 @@ export class MerchantComponent implements OnInit {
         label: 'Settings',
         icon: 'pi pi-cog',
         routerLink: '/merchant/merchant-settings'
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        command: () => this.onLogout()
       }
     ]
-  }
-
-  onLogout() {
-    console.log("smth happened");
-    
   }
 }

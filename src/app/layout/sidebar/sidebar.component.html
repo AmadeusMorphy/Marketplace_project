@@ -49,8 +49,9 @@
             <div *ngIf="isCustomer" class="overflow-y-auto flex flex-column justify-content-between h-full">
                 <ul class="list-none p-3 m-0">
                     <li>
-                        <div class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
-                            <span class="font-medium">User</span>
+                        <div class="p-3 flex align-items-center gap-3 text-600 p-ripple">
+                            <span class="font-medium">{{userName}}</span>
+                            <span>({{userType}})</span>
                         </div>
                         <ul class="list-none p-0 m-0 overflow-hidden">
                             <li>
@@ -111,9 +112,9 @@
             <div *ngIf="isAdmin" class="overflow-y-auto flex flex-column h-full justify-content-between">
                 <ul class="list-none p-3 m-0">
                     <li>
-                        <div 
-                            class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
-                            <span class="font-medium">Admin</span>
+                        <div class="p-3 flex align-items-center gap-3 text-600 p-ripple">
+                            <span class="font-medium">{{userName}}</span>
+                            <span>({{userType}})</span>
                         </div>
                         <ul class="list-none p-0 m-0 overflow-hidden">
                             <li>
@@ -184,9 +185,9 @@
             <div *ngIf="isMerchant" class="overflow-y-auto flex flex-column h-full justify-content-between">
                 <ul class="list-none p-3 m-0">
                     <li>
-                        <div 
-                            class="p-3 flex align-items-center justify-content-between text-600 p-ripple">
-                            <span class="font-medium">Merchant</span>
+                        <div class="p-3 flex align-items-center gap-3 text-600 p-ripple">
+                            <span class="font-medium">{{userName}}</span>
+                            <span>({{userType}})</span>
                         </div>
                         <ul class="list-none p-0 m-0 overflow-hidden">
                             <li [routerLink]="MERCHANT_DASHBOARD" (click)="onHide()">
