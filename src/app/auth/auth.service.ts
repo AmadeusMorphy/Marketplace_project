@@ -72,6 +72,10 @@ export class AuthService {
         this.isAuthenticatedSubject.next(false);
         this._router.navigate(['/home']);
       }, (error) => {
+        localStorage.clear();
+        console.log("Logged out: ");
+        this.isAuthenticatedSubject.next(false);
+        this._router.navigate(['/home']);
         console.error("Error stuff: ", error);
       })
     )

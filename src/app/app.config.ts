@@ -13,11 +13,15 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { AvatarModule } from 'primeng/avatar';
 import { StyleClassModule } from 'primeng/styleclass';
-import { DropdownModule} from 'primeng/dropdown'
+import { DropdownModule } from 'primeng/dropdown'
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogModule } from 'primeng/dialog';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ImageModule } from 'primeng/image';
+import { SkeletonModule } from 'primeng/skeleton';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,7 +45,11 @@ export const appConfig: ApplicationConfig = {
     DropdownModule,
     TableModule,
     TabMenuModule,
-    ConfirmPopupModule
+    ConfirmPopupModule,
+    DialogModule,
+    FileUploadModule,
+    ImageModule,
+    SkeletonModule
   ]
 
 };

@@ -17,16 +17,17 @@
             </div>
 
             <div class="form-wrapper">
-                <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'" formControlName="country" [filter]="true"
-                [style]="{width: '100%'}" placeholder="Select a country" (onChange)="onCountryChange($event)">
-                <ng-template let-country pTemplate="item">
-                  <div class="country-item">
-                    <img class="country-flag w-1 h-1 mr-4" [src]="'https://flagcdn.com/' + country.code + '.svg'"
-                      alt="{{country.country}}" />
-                    <span class="country-name">{{country.country}}</span>
-                  </div>
-                </ng-template>
-              </p-dropdown>
+                <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
+                    formControlName="country" [filter]="true" [style]="{width: '100%'}" placeholder="Select a country"
+                    (onChange)="onCountryChange($event)">
+                    <ng-template let-country pTemplate="item">
+                        <div class="country-item">
+                            <img class="country-flag w-1 h-1 mr-4"
+                                [src]="'https://flagcdn.com/' + country.code + '.svg'" alt="{{country.country}}" />
+                            <span class="country-name">{{country.country}}</span>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </div>
             <div class="form-wrapper relative">
                 <p-floatLabel>
@@ -74,7 +75,8 @@
 
             <div class="footer">
                 <div class="btn">
-                    <p-button [disabled]="isFormValid()" type="submit" [label]="isRegistering ? 'Registering...' : 'Create account'" [loading]="isRegistering" />
+                    <p-button [disabled]="isFormValid()" type="submit"
+                        [label]="isRegistering ? 'Registering...' : 'Create account'" [loading]="isRegistering" />
                 </div>
             </div>
         </form>

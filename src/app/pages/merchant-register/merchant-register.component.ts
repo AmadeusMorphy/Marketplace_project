@@ -74,12 +74,11 @@ export class MerchantRegisterComponent {
 
   onCountryChange(event: any) {
     this.selectedCountry = event.value;
-  
+
     this.registerForm.get('country')?.setValue(this.selectedCountry);
     console.log(this.registerForm.value);
-    
   }
-  
+
 
   // Custom validator for password complexity
   passwordComplexityValidator(): ValidatorFn {

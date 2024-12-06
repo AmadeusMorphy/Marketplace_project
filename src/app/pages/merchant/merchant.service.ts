@@ -31,7 +31,13 @@ export class MerchantService {
       return this._httpClient.get(`${environment.server}merchants/profile?id=${merchantId}`, { headers }).pipe(
         tap(
           (res: any) => {
-            localStorage.setItem('storeId', res.stores[0].id)
+
+            if (res.stores) {
+              localStorage.setItem('storeId', res?.stores[0]?.id)
+            } else {
+              localStorage.setItem('storeId', 'No Stores')
+            }
+
             return res;
           }, error => {
             return error;
@@ -43,6 +49,23 @@ export class MerchantService {
     }
   }
 
+  createMerchantStore(storeForm: any): Observable<any> {
+    if (isPlatformBrowser(this.platformId)) {
+
+      const token = localStorage.getItem('token');
+      const storeId = localStorage.getItem('storeId');
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      });
+
+      return this._httpClient.post(`${environment.server}stores`, storeForm, { headers }).pipe(
+        tap()
+      )
+    } else {
+      return of(null)
+    }
+  }
   getMerchantStores(): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
 
@@ -53,20 +76,19 @@ export class MerchantService {
         Authorization: `Bearer ${token}`,
       });
 
+      if (storeId !== 'No Stores') {
 
-      return this._httpClient.get(`${environment.server}stores?id=${storeId}`, { headers }).pipe(
-        tap(
-          (res: any) => {
-            return res;
-          }, (error) => {
-            return error;
-          }
+        return this._httpClient.get(`${environment.server}stores?id=${storeId}`, { headers }).pipe(
+          tap()
         )
-      )
+      } else {
+        return of(null);
+      }
     } else {
       return of(null);
     }
   }
+
   getMerchantProducts(): Observable<any> {
     // Check if the platform is browser-based
     if (!isPlatformBrowser(this.platformId)) {
