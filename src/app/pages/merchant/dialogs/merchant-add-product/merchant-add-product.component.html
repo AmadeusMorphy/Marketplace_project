@@ -1,0 +1,103 @@
+<p-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)" (onHide)="closeDialog()" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '80vw', height: '60vw' }"
+    [draggable]="false" [resizable]="false" styleClass="product-creation-dialog">
+    <!-- Dialog Header -->
+    <ng-template pTemplate="header">
+        <div class="header-container flex align-items-center justify-content-between">
+            <h2 class="m-0 text-primary">Add New Product</h2>
+        </div>
+    </ng-template>
+
+    <!-- Product Form -->
+
+    <div class="container flex gap-2 h-full w-full">
+        <div class="general-info card h-full w-full">
+            <div class="header">
+                <h3>General info:</h3>
+            </div>
+            <form [formGroup]="productForm" (ngSubmit)="addProduct()"
+                class="p-fluid p-4 h-full flex flex-column justify-content-between">
+                <div class="flex flex-wrap w-full gap-4">
+                    <!-- Product Name -->
+                    <div class="flex flex-column gap-2">
+                        <label for="title" class="font-bold">Product Name</label>
+                        <input id="title" type="text" pInputText formControlName="title" placeholder="Product name"
+                            class="w-full" />
+                    </div>
+
+                    <!-- Category -->
+                    <div class="flex flex-column gap-2">
+                        <label for="category" class="font-bold">Category</label>
+                        <p-dropdown [options]="categories" [optionLabel]="'name'" [optionValue]="'name'"
+                            formControlName="category" [filter]="true" [style]="{width: '100%'}"
+                            placeholder="Select a category" (onChange)="onCategoryChange($event)">
+                            <ng-template let-category pTemplate="item">
+                                <div class="category-item">
+                                    <span class="category-name">{{category.name}}</span>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+                    <!-- Alert Quantity -->
+                    <div class="flex flex-column gap-2">
+                        <label for="quantity" class="font-bold">Stock</label>
+                        <input id="quantity" type="number" pInputText formControlName="stock" placeholder="stock"
+                            class="w-full" />
+                    </div>
+
+                    <div class="flex flex-column gap-2">
+                        <label for="description" class="font-bold">Country of origin</label>
+                        <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
+                            formControlName="countryOfOrigin" [filter]="true" [style]="{width: '100%'}"
+                            placeholder="Select a country" (onChange)="onCountryChange($event)">
+                            <ng-template let-country pTemplate="item">
+                                <div class="country-item">
+                                    <img class="country-flag w-1 h-1 mr-4"
+                                        [src]="'https://flagcdn.com/' + country.code + '.svg'"
+                                        alt="{{country.country}}" />
+                                    <span class="country-name">{{country.country}}</span>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+                    <div class="flex flex-column gap-2">
+                        <label for="description" class="font-bold">Description</label>
+                        <textarea id="description" pInputTextarea formControlName="description"
+                            placeholder="Short Description" class="w-full"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="dialog-footer flex justify-content-end mb-5 gap-2">
+                    <p-button label="Cancel" severity="secondary" (onClick)="closeDialog()" type="button"></p-button>
+                    <p-button label="Save" [disabled]="!productForm.valid" type="submit" severity="primary"></p-button>
+                </div>
+            </form>
+        </div>
+
+        <div class="product-images card h-full w-5">
+            <div class="header">
+                <h3>Product images:</h3>
+            </div>
+
+            <div class="uploades">
+                <div class="image-container">
+                    <button *ngIf="!mainImg" pButton severity="primary" type="button" [loading]="isImgUploading"
+                        icon="pi pi-image" class="upload-button" (click)="mainImgInput.click()">
+                        <input #mainImgInput type="file" class="hidden" (change)="onMainImgSelect($event)"
+                            accept="image/*" />
+                    </button>
+                    <div *ngIf="mainImg" class="preview-container">
+                        <img [src]="mainImg" class="preview-image" alt="Store Background" />
+                        <button pButton class="delete-button" icon="pi pi-trash" type="button"
+                            (click)="removeMainImg()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-toast></p-toast>

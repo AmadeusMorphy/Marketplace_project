@@ -21,7 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 export class MerchantStoreComponent implements OnInit {
 
   stores: any;
-  visible = false;
+  createStoreDialog = false;
   bgImageLoaded = false;
   logoImageLoaded = false;
   isTextLoading = false;
@@ -34,11 +34,8 @@ export class MerchantStoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const storeId = localStorage.getItem('storeId');
-      this.stores = storeId;
-      this.getStores();
-    }
+    this.getStores();
+
   }
 
   getStores() {
@@ -46,8 +43,7 @@ export class MerchantStoreComponent implements OnInit {
 
     this._merchantService.getMerchantStores().subscribe(
       (res: any) => {
-        console.log("merchant stores: ", res);
-        if (res?.stores) {
+        if (res.stores.length > 0) {
           this.stores = res.stores[0];
           this.isTextLoading = false;
           this._cdr.detectChanges();
@@ -72,6 +68,6 @@ export class MerchantStoreComponent implements OnInit {
   }
 
   onCreateStore() {
-    this.visible = true;
+    this.createStoreDialog = true;
   }
 }

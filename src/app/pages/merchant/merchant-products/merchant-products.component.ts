@@ -1,41 +1,65 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { ProductsService } from '../../../services/products/products.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { LocalstorageService } from '../../../services/localstorage/localstorage.service';
 import { MerchantService } from '../merchant.service';
+import { MerchantAddProductComponent } from "../dialogs/merchant-add-product/merchant-add-product.component";
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-merchant-products',
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, MerchantAddProductComponent],
   templateUrl: './merchant-products.component.html',
   styleUrl: './merchant-products.component.scss'
 })
 export class MerchantProductsComponent implements OnInit {
 
   products: any;
+  addProductDialog = false;
+  isBrowser: boolean;
 
   constructor(
     private _merchantService: MerchantService,
-    private _cdr: ChangeDetectorRef,
-  ) {}
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit(): void {
-    this.getMerchantProducts()
+    if (isPlatformBrowser(this.platformId)) {
+      this.getMerchantProducts();
+    }
   }
 
   getMerchantProducts() {
-
     this._merchantService.getMerchantProducts().subscribe(
       (res: any) => {
+        this.products = res.products;
         console.log('Merchant products:', res);
       },
       (error) => {
         console.error('Error fetching merchant products:', error);
       }
     );
+  }
+
+  isNewProduct(product: any): boolean {
+    if (!this.isBrowser) return false; // Skip this check on the server
+    const createdDate = new Date(product.created_at);
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    return createdDate > thirtyDaysAgo;
+  }
+
+  getSpecKeys(spec: any): string[] {
+    return Object.keys(spec);
+  }
+
+  calculateOriginalPrice(price: number, discount: string): number {
+    const discountPercent = parseFloat(discount);
+    return Number((price / (1 - discountPercent / 100)).toFixed(2));
+  }
+
+  addProduct() {
+    this.addProductDialog = true;
   }
 }

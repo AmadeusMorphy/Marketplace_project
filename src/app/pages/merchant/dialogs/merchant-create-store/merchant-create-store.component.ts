@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
@@ -14,7 +14,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ImagesService } from '../../../../services/images/images.service';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
-import { MapGeocoder } from '@angular/google-maps';
 import { COUNTRIES } from '../../../../widgets/countries';
 
 @Component({
@@ -35,7 +34,8 @@ import { COUNTRIES } from '../../../../widgets/countries';
   ],
   templateUrl: './merchant-create-store.component.html',
   styleUrl: './merchant-create-store.component.scss',
-  animations: [fadeAnimation]
+  animations: [fadeAnimation],
+  providers: [MessageService]
 })
 
 export class MerchantCreateStoreComponent implements OnInit {
@@ -81,7 +81,6 @@ export class MerchantCreateStoreComponent implements OnInit {
     this.selectedCountry = event.value;
 
     this.storeForm.get('location')?.setValue(this.selectedCountry);
-    console.log(this.storeForm.value);
   }
 
   onStoreLogoSelect(event: any) {
@@ -132,11 +131,9 @@ export class MerchantCreateStoreComponent implements OnInit {
       this.isImgUploading = false;
 
       // Log the upload for debugging
-      console.log('Image uploaded successfully:', uploadedUrl);
       this.storeLogo = uploadedUrl;
 
       this.storeForm.get('store_logo')?.patchValue(uploadedUrl);
-      console.log("form after uploading: ", this.storeForm.value);
 
 
     } catch (error: any) {
@@ -162,11 +159,9 @@ export class MerchantCreateStoreComponent implements OnInit {
       this.isImgUploading = false;
 
       // Log the upload for debugging
-      console.log('Image uploaded successfully:', uploadedUrl);
       this.storeBg = uploadedUrl;
 
       this.storeForm.get('store_bg')?.patchValue(uploadedUrl);
-      console.log("form after uploading: ", this.storeForm.value);
 
 
     } catch (error: any) {
@@ -195,36 +190,37 @@ export class MerchantCreateStoreComponent implements OnInit {
   // }
 
   createStore() {
-    if (this.storeForm.valid) {
-      this.isSubmiting = true;
+    this.isSubmiting = true;
 
-      const storeData = this.storeForm.value;
+    console.log(this.isSubmiting);
 
-      this._merchantService.createMerchantStore(storeData).subscribe({
-        next: (response) => {
-          this.isSubmiting = false;
-          console.log("Store created: ", response);
 
-          this._messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Store created successfully'
-          });
-          this.closeDialog();
-        },
-        error: (error) => {
-          this.isSubmiting = false;
-          console.error("somthing wrong: ", error);
+    const storeData = this.storeForm.value;
 
-          this._messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Failed to create store'
-          });
-        }
-      });
-    }
-    this.isSubmiting = false;
+
+    this._merchantService.createMerchantStore(storeData).subscribe({
+      next: (response) => {
+        this.isSubmiting = false;
+        console.log("Store created: ", response);
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Store created successfully'
+        });
+        this.closeDialog();
+      },
+      error: (error) => {
+        this.isSubmiting = false;
+        console.error("somthing wrong: ", error);
+
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Failed to create store'
+        });
+      }
+    });
   }
 
   closeDialog() {

@@ -12,11 +12,11 @@ import { MerchantService } from './merchant.service';
 @Component({
   selector: 'app-merchant',
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterOutlet,
     ButtonModule,
-    TabMenuModule, 
-    ToastModule, 
+    TabMenuModule,
+    ToastModule,
     ConfirmPopupModule
   ],
   templateUrl: './merchant.component.html',
@@ -28,42 +28,40 @@ export class MerchantComponent implements OnInit {
 
   items: MenuItem[] | undefined;
 
-  constructor( 
+  constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private _router: Router,
     private _cdr: ChangeDetectorRef,
     private _merchantService: MerchantService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
-    if(isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('token');
       const userType = localStorage.getItem('userType');
 
-      if(token && (userType === 'merchant')) {
+      if (token && (userType === 'merchant')) {
 
         this.getMerchantData();
         this.loadMenuBar();
         this._cdr.detectChanges();
       } else {
-      this._router.navigate(['/404']);
+        this._router.navigate(['/404']);
       }
     }
   }
 
   getMerchantData() {
-   this._merchantService.getMerchantProfile().subscribe(
-    (res: any) => {
-      console.log(res);
+    this._merchantService.getMerchantProfile().subscribe(
+      (res: any) => {
 
-      this._merchantService.getMerchantStores().subscribe(
-        (res: any) => {
-        console.log("store", res);
-        }
-      )
-    }
-   )
+        this._merchantService.getMerchantStores().subscribe(
+          (res: any) => {
+          }
+        )
+      }
+    )
   }
 
   loadMenuBar() {

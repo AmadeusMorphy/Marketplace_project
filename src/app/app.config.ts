@@ -22,6 +22,8 @@ import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ImageModule } from 'primeng/image';
 import { SkeletonModule } from 'primeng/skeleton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ChipsModule } from 'primeng/chips';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -49,7 +51,9 @@ export const appConfig: ApplicationConfig = {
     DialogModule,
     FileUploadModule,
     ImageModule,
-    SkeletonModule
+    SkeletonModule,
+    InputTextareaModule,
+    ChipsModule
   ]
 
 };

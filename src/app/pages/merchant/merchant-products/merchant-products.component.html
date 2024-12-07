@@ -1,23 +1,77 @@
-<p>Merchant products work</p>
+<div class="container mt-4">
 
-<div class="products w-full flex flex-wrap gap-4">
+    <p-button (onClick)="addProduct()" icon="pi pi-plus"></p-button>
+    <div class="products w-full flex flex-wrap gap-4 mt-5">
 
-    <div class="product-card" *ngFor="let product of products">
-        <div class="product-image">
-            <img [src]="product.mainImage" alt="iPhone 9 Pro Max">
-            <span class="product-badge">New</span>
-        </div>
-        <div class="product-details">
-            <h2 class="product-title">{{product.title}}</h2>
-            <p class="product-description">{{product.description}}</p>
-            <div class="product-meta">
-                <span class="product-category">{{product.category}}</span>
+        <div class="product-card" *ngFor="let product of products">
+            <div class="product-image">
+                <img [src]="product.mainImage" [alt]="product.title">
+                <div class="product-badges">
+                    <span class="product-badge new" *ngIf="isNewProduct(product)">New</span>
+                    <span class="product-badge discount" *ngIf="product.discount">
+                        -{{product.discount}}%
+                    </span>
+                </div>
             </div>
-            <div class="product-price-stock">
-                <span class="price">${{product.price}}</span>
-                <span class="stock">{{product.stock}} in stock</span>
+            <div class="product-details">
+                <div class="product-header">
+                    <h2 class="product-title">{{product.title}}</h2>
+                    <div class="product-rating">
+                        <ng-container *ngFor="let rating of product.rating">
+                            <span *ngIf="rating.five">
+                                <i class="pi pi-star-fill"></i> {{rating.five}}
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <p class="product-description">{{product.description}}</p>
+
+                <div class="product-meta">
+                    <span class="product-category">{{product.category}}</span>
+                    <span class="product-origin">{{product.countryOfOrigin}}</span>
+                </div>
+
+                <div class="product-colors">
+                    <div class="color-options">
+                        <div *ngFor="let color of product.prodColors" class="color-dot"
+                            [style.background-color]="color.color" [title]="color.color_name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-price-stock">
+                    <div class="price-container">
+                        <span class="original-price" *ngIf="product.discount">
+                            ${{calculateOriginalPrice(product.price, product.discount)}}
+                        </span>
+                        <span class="price">${{product.price}}</span>
+                    </div>
+                    <span class="stock" [ngClass]="{
+                            'low-stock': product.stock < 10,
+                            'out-of-stock': product.stock === 0
+                        }">
+                        {{product.stock}} in stock
+                    </span>
+                </div>
+
+                <div class="product-actions">
+                    <button pButton class="add-to-cart-btn" [disabled]="product.stock === 0">
+                        <i class="pi pi-shopping-cart mr-2"></i>
+                        {{product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}}
+                    </button>
+                    <button pButton class="wishlist-btn" icon="pi pi-heart"></button>
+                </div>
+
+                <div class="product-tags">
+                    <span class="tag" *ngFor="let tag of product.tags">
+                        {{tag}}
+                    </span>
+                </div>
             </div>
-            <button pButton class="flex justify-content-center w-full add-to-cart-btn">Add to Cart</button>
         </div>
     </div>
 </div>
+
+<app-merchant-add-product [(visible)]="addProductDialog"
+    (visibleChange)="getMerchantProducts()"></app-merchant-add-product>

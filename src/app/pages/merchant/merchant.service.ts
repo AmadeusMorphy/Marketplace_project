@@ -37,9 +37,10 @@ export class MerchantService {
             } else {
               localStorage.setItem('storeId', 'No Stores')
             }
-
             return res;
           }, error => {
+            console.error("error stuff: ", error);
+
             return error;
           }
         )
@@ -66,24 +67,21 @@ export class MerchantService {
       return of(null)
     }
   }
+
   getMerchantStores(): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
 
       const token = localStorage.getItem('token');
-      const storeId = localStorage.getItem('storeId');
+      const userId = localStorage.getItem('userId');
       const headers = new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       });
 
-      if (storeId !== 'No Stores') {
 
-        return this._httpClient.get(`${environment.server}stores?id=${storeId}`, { headers }).pipe(
-          tap()
-        )
-      } else {
-        return of(null);
-      }
+      return this._httpClient.get(`${environment.server}stores/merchant?merchant_id=${userId}`, { headers }).pipe(
+        tap()
+      )
     } else {
       return of(null);
     }

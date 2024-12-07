@@ -7,9 +7,9 @@
     <button pButton (click)="onCreateStore()" label="Create store"></button>
 </div> -->
 
-<app-merchant-create-store [(visible)]="visible"></app-merchant-create-store>
+<app-merchant-create-store [(visible)]="createStoreDialog" (visibleChange)="getStores()"></app-merchant-create-store>
 
-<div class="store-container mt-3">
+<div *ngIf="stores" class="store-container mt-3">
     <div class="images">
         <div class="bgimage w-full h-20rem">
             <p-skeleton *ngIf="!bgImageLoaded" width="100%" height="100%"></p-skeleton>
