@@ -2,10 +2,6 @@
     <span class="text-2xl font-semibold">No stores found</span>
     <button pButton (click)="onCreateStore()" label="Create store"></button>
 </div>
-<!-- <div class="flex flex-column justify-content-center align-items-center h-30rem gap-6">
-    <span class="text-2xl font-semibold">No stores found</span>
-    <button pButton (click)="onCreateStore()" label="Create store"></button>
-</div> -->
 
 <app-merchant-create-store [(visible)]="createStoreDialog" (visibleChange)="getStores()"></app-merchant-create-store>
 
