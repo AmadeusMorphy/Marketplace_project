@@ -26,6 +26,8 @@ export class MerchantStoreComponent implements OnInit {
   logoImageLoaded = false;
   isTextLoading = false;
 
+  isLoading = false;
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _merchantService: MerchantService,
@@ -39,6 +41,7 @@ export class MerchantStoreComponent implements OnInit {
   }
 
   getStores() {
+    this.isLoading = true;
     this.isTextLoading = true;
 
     this._merchantService.getMerchantStores().subscribe(
@@ -46,11 +49,14 @@ export class MerchantStoreComponent implements OnInit {
         if (res.stores.length > 0) {
           this.stores = res.stores[0];
           this.isTextLoading = false;
+          this.isLoading = false;
           this._cdr.detectChanges();
         } else {
+          this.isLoading = false;
           this.stores = null
         }
       }, (error) => {
+        this.isLoading = false;
         console.error('Error stuff', error);
       }
     )

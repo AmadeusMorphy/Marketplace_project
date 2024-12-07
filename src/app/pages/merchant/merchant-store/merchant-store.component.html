@@ -1,4 +1,4 @@
-<div *ngIf="!stores" class="flex flex-column justify-content-center align-items-center h-30rem gap-6">
+<div *ngIf="!stores && !isLoading" class="flex flex-column justify-content-center align-items-center h-30rem gap-6">
     <span class="text-2xl font-semibold">No stores found</span>
     <button pButton (click)="onCreateStore()" label="Create store"></button>
 </div>
@@ -9,39 +9,55 @@
 
 <app-merchant-create-store [(visible)]="createStoreDialog" (visibleChange)="getStores()"></app-merchant-create-store>
 
-<div *ngIf="stores" class="store-container mt-3">
-    <div class="images">
-        <div class="bgimage w-full h-20rem">
-            <p-skeleton *ngIf="!bgImageLoaded" width="100%" height="100%"></p-skeleton>
-            <img [src]="stores.store_bg" alt="Background Image" (load)="onBgImageLoad()"
-                [class.hidden]="!bgImageLoaded" />
+<div class="store-container mt-3">
+
+    <div *ngIf="isLoading" class="skeleton">
+        <div class="images-skeleton">
+            <div class="bgimage w-full h-20rem">
+                <p-skeleton *ngIf="!bgImageLoaded" width="100%" height="100%"></p-skeleton>
+            </div>
+
+            <div class="logoimage flex w-full justify-content-center">
+                <div class="circleFrame border-2">
+                    <p-skeleton *ngIf="!logoImageLoaded" shape="circle" width="100%" height="100%"></p-skeleton>
+                </div>
+            </div>
         </div>
 
-        <div class="logoimage flex w-full justify-content-center">
-            <div class="circleFrame border-2">
-                <p-skeleton *ngIf="!logoImageLoaded" shape="circle" width="100%" height="100%"></p-skeleton>
-                <img [src]="stores.store_logo" alt="Logo Image" (load)="onLogoImageLoad()"
-                    [class.hidden]="!logoImageLoaded" />
+        <div class="title m-5 flex flex-column justify-content-center gap-2">
+            <div class="flex justify-content-center">
+                <p-skeleton height="25px" width="80px"></p-skeleton>
+            </div>
+            <div class="flex justify-content-center align-items-center gap-2">
+                <p-skeleton height="20px" width="100px"></p-skeleton>
             </div>
         </div>
     </div>
 
-    <div *ngIf="isTextLoading" class="title m-5 flex flex-column justify-content-center gap-2">
-        <div class="flex justify-content-center">
-            <p-skeleton height="25px" width="80px"></p-skeleton>
-        </div>
-        <div class="flex justify-content-center align-items-center gap-2">
-            <p-skeleton height="20px" width="100px"></p-skeleton>
-        </div>
-    </div>
 
-    <div *ngIf="!isTextLoading" class="title m-5 flex flex-column justify-content-center text-center">
-        <div class="name flex justify-content-center">
-            <p class="text-2xl font-medium m-auto">{{stores.name}}</p>
+    <div *ngIf="stores && !isLoading" class="store">
+        <div class="images">
+            <div class="bgimage w-full h-20rem">
+                <img [src]="stores.store_bg" alt="Background Image" (load)="onBgImageLoad()"
+                    [class.hidden]="!bgImageLoaded" />
+            </div>
+
+            <div class="logoimage flex w-full justify-content-center">
+                <div class="circleFrame border-2">
+                    <img [src]="stores.store_logo" alt="Logo Image" (load)="onLogoImageLoad()"
+                        [class.hidden]="!logoImageLoaded" />
+                </div>
+            </div>
         </div>
-        <div class="location flex justify-content-center align-items-center gap-2">
-            <i class="pi pi-map-marker" style="color: #9ca3af;"></i>
-            <span class="text-gray-400">{{stores.location}}</span>
+
+        <div *ngIf="!isTextLoading" class="title m-5 flex flex-column justify-content-center text-center">
+            <div class="name flex justify-content-center">
+                <p class="text-2xl font-medium m-auto">{{stores.name}}</p>
+            </div>
+            <div class="location flex justify-content-center align-items-center gap-2">
+                <i class="pi pi-map-marker" style="color: #9ca3af;"></i>
+                <span class="text-gray-400">{{stores.location}}</span>
+            </div>
         </div>
     </div>
 </div>
