@@ -8,14 +8,15 @@ $low-stock-color: #ffa500;
 
 .product-card {
   width: 240px;
-  height: 400px;
+  height: 430px;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  position: relative; // For positioning the badge
+  position: relative;
+  border: 1px solid #dfdfdf;
 
   &:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -37,7 +38,7 @@ $low-stock-color: #ffa500;
         border-radius: 12px;
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: inherit;
       }
     }
 
@@ -161,19 +162,21 @@ $low-stock-color: #ffa500;
       }
 
       .add-to-cart {
-        color: #fff;
         font-size: 14px;
         padding: 8px 12px;
-        border: none;
         border-radius: 20px;
         display: flex;
         align-items: center;
         gap: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
+        border: 2px solid var(--primary-color);
+        background: white;
+        color: var(--primary-color);
 
         &:hover {
-          background-color: var(--primary-color);
+          background: var(--primary-color);
+          color: white;
         }
 
         i {
