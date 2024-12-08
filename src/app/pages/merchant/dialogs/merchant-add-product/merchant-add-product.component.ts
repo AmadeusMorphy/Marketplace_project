@@ -115,7 +115,7 @@ export class MerchantAddProductComponent implements OnInit {
 
 
   onMainImageUpload(event: any) {
-    const file = event.target.files[0];  // Get the file from the file input
+    const file = event.target.files[0];
     if (file) {
       this.uploadingImages = true;
 
@@ -196,6 +196,5 @@ export class MerchantAddProductComponent implements OnInit {
     this.mainImagePreview = null;
   }
 
-  // Convenience getter for easy access to form fields
   get f() { return this.productForm.controls; }
 }
