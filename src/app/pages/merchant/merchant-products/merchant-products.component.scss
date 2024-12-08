@@ -5,210 +5,180 @@ $accent-color: #86868b;
 $discount-color: #ff6b6b;
 $low-stock-color: #ffa500;
 
+
 .product-card {
-  width: 280px;
+  width: 240px;
+  height: 400px;
+  background: #fff;
   border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  background: white;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  position: relative; // For positioning the badge
 
   &:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   }
 
   .product-image {
-    position: relative;
-    height: 277px;
+    height: 60%;
     overflow: hidden;
+    position: relative;
 
-    img {
-      width: 100%;
+    .img-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s ease;
+      padding: 12px;
+
+      img {
+        border-radius: 12px;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
     }
 
-    &:hover img {
-      transform: scale(1.1);
-    }
-
-    .product-badges {
+    .product-badge.new {
       position: absolute;
       top: 10px;
-      left: 10px;
-      display: flex;
-      gap: 5px;
-
-      .product-badge {
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-
-        &.new {
-          background-color: $primary-color;
-          color: white;
-        }
-
-        &.discount {
-          background-color: $discount-color;
-          color: white;
-        }
-      }
+      left: 190px;
+      background: #ff5722;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 10;
     }
   }
 
-  .product-details {
+  .product-info {
     padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40%;
 
-    .product-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-
+    .product-details {
       .product-title {
-        font-size: 1.1rem;
+        font-size: 16px;
         font-weight: 700;
-        margin: 0;
-        color: $text-color;
+        color: #333;
+        margin: 0 0 5px;
+        white-space: nowrap;
+        /* Prevent text wrapping */
+        overflow: hidden;
+        /* Hide overflowed text */
+        text-overflow: ellipsis;
+        /* Add the "..." */
+        max-width: 100%;
+        /* Ensure the title doesn't exceed its container */
       }
 
-      .product-rating {
+      .product-brand {
+        font-size: 12px;
+        font-weight: 500;
+        color: #666;
+        margin: 0 0 10px;
+      }
+
+      .product-price {
+        font-size: 16px;
+        font-weight: bold;
+        color: #007bff;
         display: flex;
         align-items: center;
-        color: #ffc107;
-        font-size: 0.8rem;
+        gap: 8px;
 
-        .pi-star-fill {
-          margin-right: 3px;
+        .original-price {
+          font-size: 14px;
+          font-weight: 500;
+          color: #888; // Muted color for the slashed price
+          text-decoration: line-through;
+          position: relative;
+
+          &:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #888;
+            transform: translateY(-50%);
+          }
+        }
+
+        .discount-price {
+          font-size: 16px;
+          font-weight: bold;
+          color: #f44336; // Highlighted color for the discounted price
         }
       }
     }
 
-    .product-description {
-      color: $accent-color;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 10px;
+    .product-rating {
+      margin-top: 8px;
+      display: flex;
+      gap: 4px;
+
+      i {
+        font-size: 14px;
+        color: #ffc107;
+
+        &.pi-star {
+          color: #ddd; // Empty star color
+        }
+      }
     }
 
-    .product-meta {
+    .action-buttons {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
-      font-size: 0.8rem;
-
-      .product-category,
-      .product-origin {
-        background-color: $secondary-color;
-        padding: 3px 8px;
-        border-radius: 4px;
-        color: $text-color;
-      }
-    }
-
-    .product-specs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      font-size: 0.8rem;
-      color: $accent-color;
-
-      .spec-item {
-        background-color: $secondary-color;
-        padding: 5px 8px;
-        border-radius: 4px;
-      }
-    }
-
-    .product-colors {
-      margin-bottom: 10px;
+      align-items: center;
 
       .color-options {
         display: flex;
-        gap: 8px;
+        gap: 5px;
 
-        .color-dot {
-          width: 20px;
-          height: 20px;
+        .color-circle {
+          width: 18px;
+          height: 18px;
           border-radius: 50%;
-          border: 2px solid white;
+          border: 2px solid #fff;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          cursor: pointer;
+          transition: transform 0.2s;
+
+          &:hover {
+            transform: scale(1.2);
+          }
         }
       }
-    }
 
-    .product-price-stock {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-
-      .price-container {
+      .add-to-cart {
+        color: #fff;
+        font-size: 14px;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 20px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
 
-        .original-price {
-          text-decoration: line-through;
-          color: $accent-color;
-          font-size: 0.9rem;
+        &:hover {
+          background-color: var(--primary-color);
         }
 
-        .price {
-          font-size: 1.2rem;
-          font-weight: 700;
-          color: $primary-color;
+        i {
+          font-size: 16px;
         }
-      }
-
-      .stock {
-        font-size: 0.8rem;
-        color: #4caf50;
-
-        &.low-stock {
-          color: $low-stock-color;
-        }
-
-        &.out-of-stock {
-          color: red;
-        }
-      }
-    }
-
-    .product-actions {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-
-      .add-to-cart-btn {
-        flex-grow: 1;
-      }
-
-      .wishlist-btn {
-        background-color: $secondary-color;
-        color: $text-color;
-        border: none;
-      }
-    }
-
-    .product-tags {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-
-      .tag {
-        background-color: $secondary-color;
-        color: $text-color;
-        font-size: 0.7rem;
-        padding: 3px 6px;
-        border-radius: 4px;
       }
     }
   }

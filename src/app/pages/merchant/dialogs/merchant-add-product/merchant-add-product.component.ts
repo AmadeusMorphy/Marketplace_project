@@ -1,177 +1,201 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { ToastModule } from 'primeng/toast';
-import { MerchantService } from '../../merchant.service';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { COUNTRIES } from '../../../../widgets/countries';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { ChipModule } from 'primeng/chip';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { MultiSelectModule } from 'primeng/multiselect';
+
+import { MerchantService } from '../../merchant.service';
 import { ImagesService } from '../../../../services/images/images.service';
+import { COUNTRIES } from '../../../../widgets/countries';
+import { SkeletonModule } from 'primeng/skeleton';
+
+interface ProductCategory {
+  name: string;
+  code: string;
+}
+
+interface ProductSize {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-merchant-add-product',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
-    DropdownModule,
     InputTextModule,
-    CheckboxModule,
-    DialogModule,
-    ToastModule,
     InputTextareaModule,
+    DropdownModule,
+    FileUploadModule,
+    ToastModule,
+    DialogModule,
+    ChipModule,
+    InputNumberModule,
+    MultiSelectModule,
+    SkeletonModule
   ],
   templateUrl: './merchant-add-product.component.html',
-  styleUrl: './merchant-add-product.component.scss',
+  styleUrls: ['./merchant-add-product.component.scss'],
   providers: [MessageService]
 })
 export class MerchantAddProductComponent implements OnInit {
-
   @Input() visible = false;
   @Output() visibleChange = new EventEmitter<boolean>();
+  @Output() productAdded = new EventEmitter<any>();
 
-  categories = [
-    { name: 'Fashion' },
-    { name: 'Men' },
-    { name: 'Kids' },
-    { name: 'Sports' },
-    { name: 'Electronics' },
-    { name: 'Decor' },
-    { name: 'Apple' }
-  ]
+  productForm: FormGroup;
 
-  selectedCategory: any;
-
-  countries: any;
   selectedCountry: any;
 
-  productForm: FormGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
-    price: new FormControl('', [Validators.required, Validators.min(0)]),
-    category: new FormControl('', Validators.required),
-    specifications: new FormControl([], Validators.required),
-    mainImage: new FormControl('', Validators.required),
-    images: new FormControl([], Validators.required),
-    prodWithColors: new FormControl([], Validators.required),
-    stock: new FormControl('', [Validators.required, Validators.min(0)]),
-    countryOfOrigin: new FormControl('', Validators.required),
-    height: new FormControl('', Validators.required),
-    width: new FormControl('', Validators.required),
-    unit_size: new FormControl('', Validators.required),
-    sizes: new FormControl([], Validators.required),
-    discount: new FormControl('', Validators.required),
-    tags: new FormControl([], Validators.required),
-  });
+  categories: ProductCategory[] = [
+    { name: 'Fashion', code: 'FASHION' },
+    { name: 'Electronics', code: 'ELECTRONICS' },
+    { name: 'Home & Decor', code: 'DECOR' },
+    { name: 'Sports', code: 'SPORTS' },
+    { name: 'Kids', code: 'KIDS' }
+  ];
 
-  mainImg: any;
-  previewMainImg: any;
+  sizeOptions: ProductSize[] = [
+    { name: 'Small', code: 'S' },
+    { name: 'Medium', code: 'M' },
+    { name: 'Large', code: 'L' },
+    { name: 'XL', code: 'XL' }
+  ];
 
-  additionImg: any;
-  previewAdditionalImg: any;
+  countries: any[] | undefined;
+  mainImagePreview: string | null = null;
 
-  selectedMainImg: File | null = null;
-  selectedAdditionalImg: File | null = null;
-  errorMessage: string | null = null;
+  isSubmitting = false;
+  uploadingImages = false;
 
-  isImgUploading = false;
-  isSubmiting = false;
   constructor(
-    private _merchantService: MerchantService,
-    private _messageService: MessageService,
-    private _imagesService: ImagesService,
-    private _cdr: ChangeDetectorRef
-  ) { }
+    private fb: FormBuilder,
+    private merchantService: MerchantService,
+    private imagesService: ImagesService,
+    private messageService: MessageService
+  ) {
+    this.productForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      category: [null, Validators.required],
+      stock: [null, [Validators.required, Validators.min(0)]],
+      countryOfOrigin: [null, Validators.required],
+      sizes: [[], Validators.required],
+      mainImage: ['', Validators.required],
+      discount: [0, [Validators.min(0), Validators.max(100)]],
+      specifications: [''],
+      tags: [[]]
+    });
+  }
 
   ngOnInit(): void {
     this.countries = COUNTRIES;
   }
 
-  onCategoryChange(event: any) {
-    this.selectedCategory = event.value;
-    this.productForm.get('category')?.setValue(this.selectedCategory);
-  }
-
-
   onCountryChange(event: any) {
     this.selectedCountry = event.value;
 
-    this.productForm.get('contryOfOrigin')?.setValue(this.selectedCountry);
-  }
-
-  onMainImgSelect(event: any) {
-
-    const file = event.target.files[0];
-    this.selectedMainImg = file;
-    if (file && file.type.startsWith('image/')) {
-      // Check for duplicate images
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.previewMainImg = reader.result as string;;
-        this._cdr.detectChanges();
-      };
-      reader.readAsDataURL(file);
-    }
-    this.uploadMainImg();
-  }
-
-  async uploadMainImg() {
-    this.isImgUploading = true;
-
-    if (!this.selectedMainImg) {
-      this.errorMessage = 'Please select a file first';
-      return;
-    }
-    try {
-      // Reset previous states
-      this.errorMessage = null;
-      // Upload the image
-      const uploadedUrl = await this._imagesService.uploadImage(this.selectedMainImg);
-
-      this.isImgUploading = false;
-
-      // Log the upload for debugging
-      this.mainImg = uploadedUrl;
-
-      this.productForm.get('maing_img')?.patchValue(uploadedUrl);
-
-
-    } catch (error: any) {
-      this.errorMessage = error.response?.data?.error || 'Failed to upload image';
-      console.error('Upload error:', error);
-      this.isImgUploading = true;
-    }
-  }
-
-
-  removeMainImg() {
-    this.mainImg = null;
-    this.previewMainImg = null;
-    this.productForm.get('maing_img')?.patchValue('null');
-    this._cdr.detectChanges();
-  }
-
-
-  isValid() {
-    return this.productForm.invalid;
-  }
-
-  addProduct() {
-    this.isSubmiting = true;
+    this.productForm.get('countryOfOrigin')?.setValue(this.selectedCountry);
     console.log(this.productForm.value);
+  }
 
-    setTimeout(() => {
-      this.isSubmiting = false;
-    }, 1200);
+
+  onMainImageUpload(event: any) {
+    const file = event.target.files[0];  // Get the file from the file input
+    if (file) {
+      this.uploadingImages = true;
+
+      this.imagesService.uploadImage(file).then(
+        (uploadedUrl) => {
+          this.mainImagePreview = uploadedUrl;
+          this.productForm.get('mainImage')?.setValue(uploadedUrl);
+          this.uploadingImages = false;
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Image Uploaded',
+            detail: 'Main image uploaded successfully'
+          });
+        },
+        (error) => {
+          this.uploadingImages = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Upload Failed',
+            detail: 'Failed to upload main image'
+          });
+        }
+      );
+    }
+  }
+
+  removeMainImage() {
+    this.mainImagePreview = null;
+    this.productForm.get('mainImage')?.setValue('');
+  }
+
+  onSubmit() {
+    console.log('clicked');
+
+    if (this.productForm.valid) {
+      this.isSubmitting = true;
+
+      const productData = this.productForm.value;
+
+      this.merchantService.addProduct(productData).subscribe({
+        next: (response) => {
+          console.log("TS added: ", response);
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Product Added',
+            detail: 'Product successfully added to catalog'
+          });
+
+          this.productAdded.emit(response);
+          this.closeDialog();
+        },
+        error: (error) => {
+          console.error("TS error", error);
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Add Product Failed',
+            detail: 'Could not add product. Please try again.'
+          });
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
+      });
+    }
   }
 
   closeDialog() {
+    this.visible = false;
     this.visibleChange.emit(false);
+    this.resetForm();
   }
+
+  resetForm() {
+    this.productForm.reset();
+    this.mainImagePreview = null;
+  }
+
+  // Convenience getter for easy access to form fields
+  get f() { return this.productForm.controls; }
 }

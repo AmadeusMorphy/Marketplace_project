@@ -1,103 +1,153 @@
-<p-dialog [visible]="visible" (visibleChange)="visibleChange.emit($event)" (onHide)="closeDialog()" [modal]="true"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '80vw', height: '60vw' }"
-    [draggable]="false" [resizable]="false" styleClass="product-creation-dialog">
-    <!-- Dialog Header -->
-    <ng-template pTemplate="header">
-        <div class="header-container flex align-items-center justify-content-between">
-            <h2 class="m-0 text-primary">Add New Product</h2>
-        </div>
-    </ng-template>
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '80vw', maxWidth: '1200px' }" header="Add New Product"
+    (onHide)="closeDialog()">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="grid p-fluid">
+        <div class="col-12 md:col-8">
+            <div class="card">
+                <h5 class="text-primary">General Product Information</h5>
 
-    <!-- Product Form -->
-
-    <div class="container flex gap-2 h-full w-full">
-        <div class="general-info card h-full w-full">
-            <div class="header">
-                <h3>General info:</h3>
-            </div>
-            <form [formGroup]="productForm" (ngSubmit)="addProduct()"
-                class="p-fluid p-4 h-full flex flex-column justify-content-between">
-                <div class="flex flex-wrap w-full gap-4">
-                    <!-- Product Name -->
-                    <div class="flex flex-column gap-2">
-                        <label for="title" class="font-bold">Product Name</label>
-                        <input id="title" type="text" pInputText formControlName="title" placeholder="Product name"
-                            class="w-full" />
+                <div class="grid formgrid">
+                    <div class="col-12 md:col-6">
+                        <div class="field">
+                            <label for="title">Product Name</label>
+                            <input id="title" type="text" pInputText formControlName="title"
+                                placeholder="Enter product name" />
+                            <small *ngIf="f['title'].invalid && (f['title'].dirty || f['title'].touched)"
+                                class="p-error">
+                                Product name is required (min 3 characters)
+                            </small>
+                        </div>
                     </div>
 
-                    <!-- Category -->
-                    <div class="flex flex-column gap-2">
-                        <label for="category" class="font-bold">Category</label>
-                        <p-dropdown [options]="categories" [optionLabel]="'name'" [optionValue]="'name'"
-                            formControlName="category" [filter]="true" [style]="{width: '100%'}"
-                            placeholder="Select a category" (onChange)="onCategoryChange($event)">
-                            <ng-template let-category pTemplate="item">
-                                <div class="category-item">
-                                    <span class="category-name">{{category.name}}</span>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+                    <div class="col-12 md:col-6">
+                        <div class="field">
+                            <label for="category">Category</label>
+                            <p-dropdown id="category" [options]="categories" optionLabel="name" optionValue="code"
+                                formControlName="category" placeholder="Select a category"></p-dropdown>
+                        </div>
                     </div>
 
-                    <!-- Alert Quantity -->
-                    <div class="flex flex-column gap-2">
-                        <label for="quantity" class="font-bold">Stock</label>
-                        <input id="quantity" type="number" pInputText formControlName="stock" placeholder="stock"
-                            class="w-full" />
-                    </div>
-
-                    <div class="flex flex-column gap-2">
-                        <label for="description" class="font-bold">Country of origin</label>
-                        <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
-                            formControlName="countryOfOrigin" [filter]="true" [style]="{width: '100%'}"
-                            placeholder="Select a country" (onChange)="onCountryChange($event)">
-                            <ng-template let-country pTemplate="item">
-                                <div class="country-item">
-                                    <img class="country-flag w-1 h-1 mr-4"
-                                        [src]="'https://flagcdn.com/' + country.code + '.svg'"
-                                        alt="{{country.country}}" />
-                                    <span class="country-name">{{country.country}}</span>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-                    </div>
-
-                    <div class="flex flex-column gap-2">
-                        <label for="description" class="font-bold">Description</label>
-                        <textarea id="description" pInputTextarea formControlName="description"
-                            placeholder="Short Description" class="w-full"></textarea>
-                    </div>
-
-                </div>
-
-                <div class="dialog-footer flex justify-content-end mb-5 gap-2">
-                    <p-button label="Cancel" severity="secondary" (onClick)="closeDialog()" type="button"></p-button>
-                    <p-button label="Save" [disabled]="!productForm.valid" type="submit" severity="primary"></p-button>
-                </div>
-            </form>
-        </div>
-
-        <div class="product-images card h-full w-5">
-            <div class="header">
-                <h3>Product images:</h3>
-            </div>
-
-            <div class="uploades">
-                <div class="image-container">
-                    <button *ngIf="!mainImg" pButton severity="primary" type="button" [loading]="isImgUploading"
-                        icon="pi pi-image" class="upload-button" (click)="mainImgInput.click()">
-                        <input #mainImgInput type="file" class="hidden" (change)="onMainImgSelect($event)"
-                            accept="image/*" />
-                    </button>
-                    <div *ngIf="mainImg" class="preview-container">
-                        <img [src]="mainImg" class="preview-image" alt="Store Background" />
-                        <button pButton class="delete-button" icon="pi pi-trash" type="button"
-                            (click)="removeMainImg()"></button>
+                    <div class="col-12">
+                        <div class="field">
+                            <label for="description">Product Description</label>
+                            <textarea id="description" pInputTextarea formControlName="description" rows="4"
+                                placeholder="Describe your product"></textarea>
+                            <small
+                                *ngIf="f['description'].invalid && (f['description'].dirty || f['description'].touched)"
+                                class="p-error">
+                                Description is required (min 10 characters)
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="card mt-3">
+                <h5 class="text-primary">Product Details</h5>
+                <div class="grid formgrid">
+                    <div class="col-12 md:col-4">
+                        <div class="field">
+                            <label for="price">Price</label>
+                            <p-inputNumber id="price" formControlName="price" mode="currency" currency="USD"
+                                placeholder="Enter price"></p-inputNumber>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <div class="field">
+                            <label for="stock">Stock Quantity</label>
+                            <p-inputNumber id="stock" formControlName="stock" [min]="0"
+                                placeholder="Enter stock quantity"></p-inputNumber>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <div class="field">
+                            <label for="countryOfOrigin">Country of Origin</label>
+                            <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
+                                formControlName="countryOfOrigin" [filter]="true" placeholder="Select a country"
+                                (onChange)="onCountryChange($event)">
+                                <ng-template let-country pTemplate="item">
+                                    <div class="country-item">
+                                        <img class="country-flag w-1 h-1 mr-4"
+                                            [src]="'https://flagcdn.com/' + country.code + '.svg'"
+                                            alt="{{country.country}}" />
+                                        <span class="country-name">{{country.country}}</span>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="field">
+                            <label for="sizes">Available Sizes</label>
+                            <p-multiSelect id="sizes" [options]="sizeOptions" optionLabel="name" optionValue="code"
+                                formControlName="sizes" placeholder="Select sizes"></p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <h5 class="text-primary">Optional Details</h5>
+                <div class="grid formgrid">
+                    <div class="col-12 md:col-6">
+                        <div class="field">
+                            <label for="discount">Discount (%)</label>
+                            <p-inputNumber id="discount" formControlName="discount" [min]="0" [max]="100"
+                                placeholder="Enter discount percentage"></p-inputNumber>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="field">
+                            <label for="specifications">Additional Specifications</label>
+                            <textarea id="specifications" pInputTextarea formControlName="specifications" rows="3"
+                                placeholder="Enter any additional product specifications"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="col-12 md:col-4">
+            <div class="card">
+                <h5 class="text-primary">Product Images</h5>
+
+                <div class="field">
+                    <label>Main Product Image</label>
+
+                    <!-- Button to trigger file input -->
+                    <button pButton icon="pi pi-plus" label="Upload Main Image" [loading]="uploadingImages"
+                        (click)="fileInput.click()"></button>
+
+                    <!-- Hidden file input to select image -->
+                    <input #fileInput type="file" accept="image/*" style="display: none"
+                        (change)="onMainImageUpload($event); $event.stopPropagation()" />
+
+                    <div *ngIf="uploadingImages" class="mt-2 image-preview">
+                        <p-skeleton width="25rem" height="20rem"></p-skeleton>
+                    </div>
+                    <div *ngIf="mainImagePreview" class="mt-2 image-preview">
+                        <img [src]="mainImagePreview" class="w-full" />
+                        <button pButton icon="pi pi-times"
+                            class="p-button-danger p-button-rounded p-button-text absolute top-0 right-0"
+                            (click)="removeMainImage()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="flex justify-content-end gap-2">
+                <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-text p-button-secondary"
+                    (click)="closeDialog()"></p-button>
+                <p-button label="Add Product" icon="pi pi-check"
+                    [disabled]="productForm.invalid || isSubmitting || uploadingImages"
+                    [loading]="isSubmitting"></p-button>
+            </div>
+        </div>
+    </form>
 </p-dialog>
 
-<p-toast></p-toast>
+<p-toast position="top-right"></p-toast>

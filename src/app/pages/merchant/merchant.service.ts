@@ -105,5 +105,31 @@ export class MerchantService {
     return this._httpClient.get(`${environment.server}products/merchant?merchant_id=${merchantId}`, { headers });
   }
 
+  addProduct(productForm: any): Observable<any> {
 
+    if (!isPlatformBrowser(this.platformId)) {
+      console.warn('Attempted to fetch merchant products in a non-browser environment.');
+      return of(null);
+    }
+
+    const token = localStorage.getItem('token');
+    const merchantId = localStorage.getItem('userId');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this._httpClient.post(`${environment.server}products`, productForm, { headers }).pipe(
+      tap(
+        (res: any) => {
+          console.log("Product added successfully: ", res);
+
+        }, (error) => {
+          console.error("Error stuff: ", error);
+
+        }
+      )
+    )
+  }
 }
