@@ -3,10 +3,11 @@ import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MERCHANT_ROUTES } from './pages/merchant/merchant.routes';
 import { NgModule } from '@angular/core';
+import { ADMIN_ROUTES } from './pages/admin/admin.routes';
 // import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: '',
         component: LayoutComponent,
@@ -24,6 +25,10 @@ export const routes: Routes = [
                 path: 'merchant-register', loadComponent: () => import('./pages/merchant-register/merchant-register.component').then(m => m.MerchantRegisterComponent)
             },
             {
+                path: 'admin',
+                children: ADMIN_ROUTES
+            },
+            {
                 path: 'merchant',
                 children: MERCHANT_ROUTES
             }
@@ -35,5 +40,5 @@ export const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
-  })
-  export class AppRoutingModule {}
+})
+export class AppRoutingModule { }

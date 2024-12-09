@@ -1,0 +1,7 @@
+<div class="menu-bar">
+    <p-tabMenu [model]="items" />
+</div>
+
+<main [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+    <router-outlet #o="outlet"></router-outlet>
+</main>

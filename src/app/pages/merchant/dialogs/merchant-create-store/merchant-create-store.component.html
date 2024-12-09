@@ -18,6 +18,15 @@
                         Store name is required
                     </small>
                 </div>
+                <div class="field">
+                    <label for="reg_number" class="font-bold">Registeration Number</label>
+                    <p-inputNumber inputId="withoutgrouping" pInputNumber formControlName="reg_number"
+                        placeholder="Reg number..." class="w-full" />
+                    <small *ngIf="storeForm.get('reg_number')?.invalid && storeForm.get('reg_number')?.touched"
+                        class="p-error">
+                        Registeration number is required
+                    </small>
+                </div>
             </div>
             <div class="col-12 md:col-6">
                 <div class="field">
@@ -33,6 +42,12 @@
                             </div>
                         </ng-template>
                     </p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="storeName" class="font-bold">Store categoies</label>
+                    <p-multiSelect id="categories" [options]="categories" optionLabel="name" optionValue="code"
+                        formControlName="categories" placeholder="Select categories"
+                        (onChange)="showForm()"></p-multiSelect>
                 </div>
             </div>
         </div>

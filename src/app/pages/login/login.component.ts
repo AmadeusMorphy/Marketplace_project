@@ -12,13 +12,13 @@ import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule, 
-    ButtonModule, 
-    InputTextModule, 
-    FloatLabelModule, 
-    FormsModule, 
+    CommonModule,
+    ButtonModule,
+    InputTextModule,
+    FloatLabelModule,
+    FormsModule,
     ReactiveFormsModule,
-    ToastModule  
+    ToastModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -38,7 +38,7 @@ export class LoginComponent {
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
     private _messagesService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -47,11 +47,11 @@ export class LoginComponent {
   onSubmit() {
     this.isLoggingIn = true;
     console.log(this.loginForm.value);
-    
+
     this._authService.onLogin(this.loginForm.value).subscribe(
       (res: any) => {
         console.log("Logged:", res);
-        
+
         this.isLoggingIn = false;
         this._messagesService.add({
           severity: 'success',
@@ -59,17 +59,17 @@ export class LoginComponent {
           detail: 'Logged in successfully!'
         })
 
-        if(res.user.userType === 'customer') {
+        if (res.user.userType === 'customer') {
           setTimeout(() => {
             this._router.navigate(['/']);
           }, 1300);
-        } else if(res.user.userType === 'merchant') {
+        } else if (res.user.userType === 'merchant') {
           setTimeout(() => {
             this._router.navigate(['/merchant/merchant-dashboard']);
           }, 1300);
-        } else if(res.user.userType === 'admin') {
+        } else if (res.user.userType === 'admin') {
           setTimeout(() => {
-            this._router.navigate(['/']);
+            this._router.navigate(['/admin/dashboard']);
           }, 1300);
         }
       }, () => {

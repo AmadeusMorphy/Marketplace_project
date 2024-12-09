@@ -15,6 +15,13 @@ import { ImagesService } from '../../../../services/images/images.service';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { COUNTRIES } from '../../../../widgets/countries';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { InputNumberModule } from 'primeng/inputnumber';
+
+interface Category {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-merchant-create-store',
@@ -30,7 +37,9 @@ import { COUNTRIES } from '../../../../widgets/countries';
     FileUploadModule,
     InputTextModule,
     CardModule,
-    ImageModule
+    ImageModule,
+    MultiSelectModule,
+    InputNumberModule
   ],
   templateUrl: './merchant-create-store.component.html',
   styleUrl: './merchant-create-store.component.scss',
@@ -47,8 +56,18 @@ export class MerchantCreateStoreComponent implements OnInit {
     name: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
     store_logo: new FormControl('', Validators.required),
-    store_bg: new FormControl('', Validators.required)
+    store_bg: new FormControl('', Validators.required),
+    reg_number: new FormControl('', Validators.required),
+    categories: new FormControl('', Validators.required)
   });
+
+  categories: Category[] = [
+    { name: 'Fashion', code: 'FASHION' },
+    { name: 'Electronics', code: 'ELECTRONICS' },
+    { name: 'Home & Decor', code: 'DECOR' },
+    { name: 'Sports', code: 'SPORTS' },
+    { name: 'Kids', code: 'KIDS' }
+  ];
 
   countries: any[] | undefined;
   selectedCountry: string | undefined;
@@ -99,6 +118,10 @@ export class MerchantCreateStoreComponent implements OnInit {
     this.uploadStoreLogo();
   }
 
+  showForm() {
+    console.log(this.storeForm.value);
+
+  }
   onStoreBgSelect(event: any) {
 
     const file = event.target.files[0];
