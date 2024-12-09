@@ -74,4 +74,13 @@ export class MerchantService {
     }
     return of(null)
   }
+
+  updateStore(storeData: any): Observable<any> {
+    if (this.isBrowser) {
+      const storeId = localStorage.getItem('storeId');
+
+      return this._httpClient.put(`${environment.server}stores?id=${storeId}`, storeData, { headers: this.getHeaders() });
+    }
+    return of(null);
+  }
 }

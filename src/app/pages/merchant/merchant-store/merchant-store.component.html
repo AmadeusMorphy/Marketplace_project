@@ -8,44 +8,53 @@
 
 <div class="store-container mt-3">
 
-    <div *ngIf="isLoading" class="skeleton">
+    <div *ngIf="isLoading || uploadingBg || uploadingLogo" class="skeleton">
         <div class="images-skeleton">
             <div class="bgimage w-full h-20rem">
-                <p-skeleton *ngIf="!bgImageLoaded" width="100%" height="100%"></p-skeleton>
+                <p-skeleton *ngIf="!bgImageLoaded || uploadingBg || uploadingLogo " width="100%"
+                    height="100%"></p-skeleton>
             </div>
 
             <div class="logoimage flex w-full justify-content-center">
                 <div class="circleFrame border-2 border-300">
-                    <p-skeleton *ngIf="!logoImageLoaded" shape="circle" width="100%" height="100%"></p-skeleton>
+                    <p-skeleton *ngIf="!logoImageLoaded || uploadingBg ||  uploadingLogo" shape="circle" width="100%"
+                        height="100%"></p-skeleton>
                 </div>
             </div>
         </div>
 
         <div class="title m-5 flex flex-column justify-content-center gap-2">
             <div class="flex justify-content-center">
-                <p-skeleton height="25px" width="80px"></p-skeleton>
+                <p-skeleton *ngIf="isLoading || uploadingLogo || uploadingBg" height="25px" width="80px"></p-skeleton>
             </div>
             <div class="flex justify-content-center align-items-center gap-2">
-                <p-skeleton height="20px" width="100px"></p-skeleton>
+                <p-skeleton *ngIf="isLoading || uploadingLogo || uploadingBg" height="20px" width="100px"></p-skeleton>
             </div>
         </div>
     </div>
 
 
-    <div *ngIf="stores && !isLoading" class="store" [@fadeAnimation] [@.disabled]="isLoading && isTextLoading">
+    <div *ngIf="stores && !uploadingBg && !uploadingLogo && !isLoading" class="store" [@fadeAnimation]
+        [@.disabled]="isLoading && uploadingBg && uploadingLogo && isTextLoading">
         <div class="images">
-            <div class="bgimage w-full h-20rem relative">
+            <div class="bgimage w-full h-20rem relative dark-overlay">
                 <img [src]="stores.store_bg" alt="Background Image" (load)="onBgImageLoad()"
-                    [class.hidden]="!bgImageLoaded" />
+                    [class.hidden]="!bgImageLoaded || uploadingBg" />
                 <span class="status" [ngClass]="stores.status === 'Active' ? 'bg-green-400' :
                                 stores.status === 'InActive' ? 'bg-red-400' :
                                 'bg-orange-400'">{{stores.status}}</span>
+                <i class="bg-camera pi pi-camera" (click)="bgInput.click()"></i>
+                <input #bgInput type="file" accept="image/*" style="display: none"
+                    (change)="onBgUpload($event); $event.stopPropagation()" />
             </div>
 
             <div class="logoimage flex w-full justify-content-center">
                 <div class="circleFrame border-2 border-200">
                     <img [src]="stores.store_logo" alt="Logo Image" (load)="onLogoImageLoad()"
-                        [class.hidden]="!logoImageLoaded" />
+                        [class.hidden]="!logoImageLoaded || uploadingLogo" />
+                    <i class="logo-camera pi pi-camera" (click)="logoInput.click()"></i>
+                    <input #logoInput type="file" accept="image/*" style="display: none"
+                        (change)="onLogoUpload($event); $event.stopPropagation()" />
                 </div>
             </div>
         </div>
@@ -61,3 +70,5 @@
         </div>
     </div>
 </div>
+
+<p-toast></p-toast>
