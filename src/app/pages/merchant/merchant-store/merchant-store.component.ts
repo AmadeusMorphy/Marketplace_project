@@ -1,10 +1,11 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MerchantService } from '../merchant.service';
 import { MerchantCreateStoreComponent } from "../dialogs/merchant-create-store/merchant-create-store.component";
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';
+import { fadeAnimation } from '../../../widgets/animations/fade.animation';
 
 @Component({
   selector: 'app-merchant-store',
@@ -16,7 +17,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     SkeletonModule
   ],
   templateUrl: './merchant-store.component.html',
-  styleUrl: './merchant-store.component.scss'
+  styleUrl: './merchant-store.component.scss',
+  animations: [fadeAnimation]
 })
 export class MerchantStoreComponent implements OnInit {
 
@@ -28,6 +30,7 @@ export class MerchantStoreComponent implements OnInit {
 
   isLoading = false;
   isBrowser: boolean;
+  isServer: boolean;
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _merchantService: MerchantService,
@@ -35,6 +38,7 @@ export class MerchantStoreComponent implements OnInit {
 
   ) { 
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.isServer = isPlatformServer(this.platformId);
   }
 
   ngOnInit() {

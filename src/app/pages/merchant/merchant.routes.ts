@@ -1,9 +1,7 @@
 import { Routes } from "@angular/router";
 import { MerchantComponent } from "./merchant.component";
 import { DASHBOARD, MESSAGES, PRODUCTS, SETTINGS, STORE } from "./merchant.constants";
-import { authGuard } from "../../auth/auth.guard";
-import { MerchantProductsComponent } from "./merchant-products/merchant-products.component";
-import { MerchantDashboardComponent } from "./merchant-dashboard/merchant-dashboard.component";
+// import { authGuard } from "../../auth/auth.guard";
 
 
 export const MERCHANT_ROUTES: Routes = [
@@ -14,7 +12,7 @@ export const MERCHANT_ROUTES: Routes = [
         children: [
             {
                 path: DASHBOARD,
-                component: MerchantDashboardComponent
+                loadComponent: () => import('./merchant-dashboard/merchant-dashboard.component').then(m => m.MerchantDashboardComponent)
             },
             {
                 path: STORE,
@@ -22,7 +20,7 @@ export const MERCHANT_ROUTES: Routes = [
             },
             {
                 path: PRODUCTS,
-                component: MerchantProductsComponent
+                loadComponent: () => import('./merchant-products/merchant-products.component').then(m => m.MerchantProductsComponent)
             },
             {
                 path: MESSAGES,

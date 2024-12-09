@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformServer } from '@angular/common';
 import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { MerchantService } from '../merchant.service';
@@ -25,6 +25,7 @@ export class MerchantProductsComponent implements OnInit {
   addProductDialog = false;
   isBrowser: boolean;
   isLoading = false;
+  isServer: boolean;
 
   constructor(
     private _merchantService: MerchantService,
@@ -32,16 +33,16 @@ export class MerchantProductsComponent implements OnInit {
     private _cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.isServer = isPlatformServer(this.platformId)
   }
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
       this.getMerchantProducts();
-    }
   }
 
   getMerchantProducts() {
     this.isLoading = true;
+    if(this.isBrowser) {
     this._merchantService.getMerchantProducts().subscribe(
       (res: any) => {
         this.products = res.products;
@@ -54,6 +55,7 @@ export class MerchantProductsComponent implements OnInit {
         console.error('Error fetching merchant products:', error);
       }
     );
+  }
   }
 
   isNewProduct(product: any): boolean {

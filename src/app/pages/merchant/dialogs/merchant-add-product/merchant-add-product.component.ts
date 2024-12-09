@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -17,6 +17,7 @@ import { MerchantService } from '../../merchant.service';
 import { ImagesService } from '../../../../services/images/images.service';
 import { COUNTRIES } from '../../../../widgets/countries';
 import { SkeletonModule } from 'primeng/skeleton';
+import { fadeAnimation } from '../../../../widgets/animations/fade.animation';
 
 interface ProductCategory {
   name: string;
@@ -49,7 +50,8 @@ interface ProductSize {
   ],
   templateUrl: './merchant-add-product.component.html',
   styleUrls: ['./merchant-add-product.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService],
+  animations: [fadeAnimation]
 })
 export class MerchantAddProductComponent implements OnInit {
   @Input() visible = false;
@@ -81,11 +83,13 @@ export class MerchantAddProductComponent implements OnInit {
   isSubmitting = false;
   uploadingImages = false;
 
+  uploadedImgsCount: number = 0;
   constructor(
     private fb: FormBuilder,
     private merchantService: MerchantService,
     private imagesService: ImagesService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private _cdr: ChangeDetectorRef
   ) {
     this.productForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -123,7 +127,6 @@ export class MerchantAddProductComponent implements OnInit {
         (uploadedUrl) => {
           this.mainImagePreview = uploadedUrl;
           this.productForm.get('mainImage')?.setValue(uploadedUrl);
-          this.uploadingImages = false;
           this.messageService.add({
             severity: 'success',
             summary: 'Image Uploaded',
@@ -142,9 +145,13 @@ export class MerchantAddProductComponent implements OnInit {
     }
   }
 
+  loadMainImg() {
+    this.uploadingImages = false;
+  }
   removeMainImage() {
     this.mainImagePreview = null;
     this.productForm.get('mainImage')?.setValue('');
+    this._cdr.detectChanges();
   }
 
   onSubmit() {

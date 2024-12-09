@@ -128,8 +128,9 @@
                     <div *ngIf="uploadingImages" class="mt-2 image-preview">
                         <p-skeleton width="25rem" height="20rem"></p-skeleton>
                     </div>
-                    <div *ngIf="mainImagePreview" class="mt-2 image-preview">
-                        <img [src]="mainImagePreview" class="w-full" />
+                    <div *ngIf="mainImagePreview" [hidden]="uploadingImages" class="mt-2 image-preview">
+                        <img [src]="mainImagePreview" (load)="loadMainImg()" class="w-full" [@fadeAnimation]
+                        [@.disabled]="uploadingImages"/>
                         <button pButton icon="pi pi-times"
                             class="p-button-danger p-button-rounded p-button-text absolute top-0 right-0"
                             (click)="removeMainImage()"></button>

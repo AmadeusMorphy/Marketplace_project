@@ -4,6 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { TableModule } from 'primeng/table';
+import { fadeAnimation } from '../../../widgets/animations/fade.animation';
 
 @Component({
   selector: 'app-merchant-dashboard',
@@ -15,7 +16,8 @@ import { TableModule } from 'primeng/table';
     ChartModule
   ],
   templateUrl: './merchant-dashboard.component.html',
-  styleUrl: './merchant-dashboard.component.scss'
+  styleUrl: './merchant-dashboard.component.scss',
+  animations: [fadeAnimation]
 })
 export class MerchantDashboardComponent {
   salesData: any;

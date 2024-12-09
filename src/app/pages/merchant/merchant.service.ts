@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,14 @@ import { isPlatformBrowser } from '@angular/common';
 export class MerchantService {
 
   private isBrowser: boolean;
+  private isServer: boolean;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _httpClient: HttpClient
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.isServer = isPlatformServer(this.platformId);
   }
 
   private getHeaders(): HttpHeaders {

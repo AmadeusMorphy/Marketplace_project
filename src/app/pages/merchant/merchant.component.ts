@@ -40,12 +40,11 @@ export class MerchantComponent implements OnInit {
 
   ngOnInit() {
     this.loadMenuBar();
-    if (this.isBrowser) {
-      this.initializeBrowserSpecificLogic();
-    }
+    this.initializeBrowserSpecificLogic();
   }
 
   private initializeBrowserSpecificLogic() {
+    if(this.isBrowser) {
     const token = localStorage.getItem('token');
     const userType = localStorage.getItem('userType');
 
@@ -55,8 +54,10 @@ export class MerchantComponent implements OnInit {
       this._router.navigate(['/404']);
     }
   }
+  }
 
   getMerchantData() {
+    if(this.isBrowser){
     this._merchantService.getMerchantProfile().subscribe(
       (res: any) => {
         this._merchantService.getMerchantStores().subscribe(
@@ -65,7 +66,7 @@ export class MerchantComponent implements OnInit {
           }
         );
       }
-    );
+    );}
   }
 
   loadMenuBar() {
