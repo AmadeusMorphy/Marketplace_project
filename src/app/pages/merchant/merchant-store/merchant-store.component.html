@@ -33,10 +33,11 @@
 
     <div *ngIf="stores && !isLoading" class="store">
         <div class="images">
-            <div class="bgimage w-full h-20rem">
+            <div class="bgimage w-full h-20rem relative">
                 <img [src]="stores.store_bg" alt="Background Image" (load)="onBgImageLoad()"
                     [class.hidden]="!bgImageLoaded" />
-            </div>
+                    <span class="status" [ngClass]="stores.status === 'Active' ? 'bg-green-00' : 'bg-red-600'">{{stores.status}}</span>
+                </div>
 
             <div class="logoimage flex w-full justify-content-center">
                 <div class="circleFrame border-2">

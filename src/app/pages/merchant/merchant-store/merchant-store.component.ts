@@ -27,40 +27,46 @@ export class MerchantStoreComponent implements OnInit {
   isTextLoading = false;
 
   isLoading = false;
-
+  isBrowser: boolean;
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _merchantService: MerchantService,
     private _cdr: ChangeDetectorRef,
 
-  ) { }
+  ) { 
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
     this.getStores();
-
   }
 
   getStores() {
     this.isLoading = true;
     this.isTextLoading = true;
 
+    if(this.isBrowser) {
     this._merchantService.getMerchantStores().subscribe(
       (res: any) => {
-        if (res.stores.length > 0) {
+        console.log(res);
+        
+        if (res && res.stores && res.stores.length > 0) {
           this.stores = res.stores[0];
           this.isTextLoading = false;
-          this.isLoading = false;
-          this._cdr.detectChanges();
         } else {
-          this.isLoading = false;
-          this.stores = null
+          this.stores = null;
         }
-      }, (error) => {
         this.isLoading = false;
-        console.error('Error stuff', error);
+        this._cdr.detectChanges();
+      },
+      (error) => {
+        this.stores = null;
+        this.isLoading = false;
+        console.error('Error fetching stores:', error);
+        this._cdr.detectChanges();
       }
-    )
-    this._cdr.detectChanges();
+    );
+  }
   }
 
   onBgImageLoad() {
@@ -77,3 +83,4 @@ export class MerchantStoreComponent implements OnInit {
     this.createStoreDialog = true;
   }
 }
+

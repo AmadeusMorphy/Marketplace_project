@@ -1,11 +1,11 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmPopup, ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ButtonModule } from 'primeng/button';
 import { MerchantService } from './merchant.service';
 
@@ -27,41 +27,45 @@ import { MerchantService } from './merchant.service';
 export class MerchantComponent implements OnInit {
 
   items: MenuItem[] | undefined;
+  isBrowser: boolean;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private _router: Router,
     private _cdr: ChangeDetectorRef,
     private _merchantService: MerchantService
-  ) { }
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit() {
+    this.loadMenuBar();
+    if (this.isBrowser) {
+      this.initializeBrowserSpecificLogic();
+    }
+  }
 
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token');
-      const userType = localStorage.getItem('userType');
+  private initializeBrowserSpecificLogic() {
+    const token = localStorage.getItem('token');
+    const userType = localStorage.getItem('userType');
 
-      if (token && (userType === 'merchant')) {
-
-        this.getMerchantData();
-        this.loadMenuBar();
-        this._cdr.detectChanges();
-      } else {
-        this._router.navigate(['/404']);
-      }
+    if (token && userType === 'merchant') {
+      this.getMerchantData();
+    } else {
+      this._router.navigate(['/404']);
     }
   }
 
   getMerchantData() {
     this._merchantService.getMerchantProfile().subscribe(
       (res: any) => {
-
         this._merchantService.getMerchantStores().subscribe(
-          (res: any) => {
+          (storesRes: any) => {
+            // Handle stores data if needed
           }
-        )
+        );
       }
-    )
+    );
   }
 
   loadMenuBar() {
@@ -91,6 +95,7 @@ export class MerchantComponent implements OnInit {
         icon: 'pi pi-cog',
         routerLink: '/merchant/merchant-settings'
       }
-    ]
+    ];
   }
 }
+

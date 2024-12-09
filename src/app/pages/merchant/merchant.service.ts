@@ -9,127 +9,67 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class MerchantService {
 
-  token: any;
-  merchantId: any;
-  headers: any;
+  private isBrowser: boolean;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _httpClient: HttpClient
-  ) { }
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
-  getMerchantProfile(): Observable<any> {
-    if (isPlatformBrowser(this.platformId)) {
+  private getHeaders(): HttpHeaders {
+    if (this.isBrowser) {
       const token = localStorage.getItem('token');
-      const merchantId = localStorage.getItem('userId');
-
-      const headers = new HttpHeaders({
+      return new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       });
-
-      return this._httpClient.get(`${environment.server}merchants/profile?id=${merchantId}`, { headers }).pipe(
-        tap(
-          (res: any) => {
-
-            if (res.stores) {
-              localStorage.setItem('storeId', res?.stores[0]?.id)
-            } else {
-              localStorage.setItem('storeId', 'No Stores')
-            }
-            return res;
-          }, error => {
-            console.error("error stuff: ", error);
-
-            return error;
-          }
-        )
-      )
-    } else {
-      return of(null);
     }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+  }
+
+  getMerchantProfile(): Observable<any> {
+    if (this.isBrowser) {
+      const merchantId = localStorage.getItem('userId');
+      return this._httpClient.get(`${environment.server}merchants/profile?id=${merchantId}`, { headers: this.getHeaders() });
+    }
+    return of(null);
   }
 
   createMerchantStore(storeForm: any): Observable<any> {
-    if (isPlatformBrowser(this.platformId)) {
+    if (this.isBrowser) {
 
-      const token = localStorage.getItem('token');
-      const storeId = localStorage.getItem('storeId');
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      });
-
-      return this._httpClient.post(`${environment.server}stores`, storeForm, { headers }).pipe(
-        tap()
-      )
-    } else {
-      return of(null)
+      return this._httpClient.post(`${environment.server}stores`, storeForm, { headers: this.getHeaders() })
     }
+    return of(null);
   }
 
   getMerchantStores(): Observable<any> {
-    if (isPlatformBrowser(this.platformId)) {
-
-      const token = localStorage.getItem('token');
+    if (this.isBrowser) {
       const userId = localStorage.getItem('userId');
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      });
-
-
-      return this._httpClient.get(`${environment.server}stores/merchant?merchant_id=${userId}`, { headers }).pipe(
-        tap()
-      )
-    } else {
-      return of(null);
+      return this._httpClient.get(`${environment.server}stores/merchant?id=${userId}`, { headers: this.getHeaders() });
     }
+    return of(null);
   }
 
   getMerchantProducts(): Observable<any> {
     // Check if the platform is browser-based
-    if (!isPlatformBrowser(this.platformId)) {
-      console.warn('Attempted to fetch merchant products in a non-browser environment.');
-      return of(null);
+    if (this.isBrowser) {
+      const merchantId = localStorage.getItem('userId');
+      return this._httpClient.get(`${environment.server}products/merchant?merchant_id=${merchantId}`, { headers: this.getHeaders() });
     }
-
-    const token = localStorage.getItem('token');
-    const merchantId = localStorage.getItem('userId');
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this._httpClient.get(`${environment.server}products/merchant?merchant_id=${merchantId}`, { headers });
+    return of(null);
   }
 
   addProduct(productForm: any): Observable<any> {
 
-    if (!isPlatformBrowser(this.platformId)) {
-      console.warn('Attempted to fetch merchant products in a non-browser environment.');
-      return of(null);
+    if (this.isBrowser) {
+
+      return this._httpClient.post(`${environment.server}products`, productForm, { headers: this.getHeaders() })
     }
-
-    const token = localStorage.getItem('token');
-    const merchantId = localStorage.getItem('userId');
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this._httpClient.post(`${environment.server}products`, productForm, { headers }).pipe(
-      tap(
-        (res: any) => {
-          console.log("Product added successfully: ", res);
-
-        }, (error) => {
-          console.error("Error stuff: ", error);
-
-        }
-      )
-    )
+    return of(null)
   }
 }
