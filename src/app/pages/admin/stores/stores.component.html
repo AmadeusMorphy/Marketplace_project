@@ -1,31 +1,45 @@
 <div class="container mt-3">
-    @for (store of stores; track store._id) {
 
-    <div class="profile-card">
-        <div class="profile-card-header relative">
-            <img [src]="store.store_bg" alt="Banner" class="banner-image" />
-            <span class="status-badge" [ngClass]="store.status === 'Active' ? 'badge-active' : 
+    <div class="cards-container w-full flex flex-wrap justify-content-start gap-8 mt-5" *ngIf="!isLoading" [@fadeAnimation] [@.disabled]="isLoading">
+        @for (store of stores; track store._id) {
+
+        <div class="profile-card">
+            <div class="profile-card-header relative">
+                <img [src]="store.store_bg" alt="Banner" class="banner-image" />
+                <span class="status-badge" [ngClass]="store.status === 'Active' ? 'badge-active' : 
                                              store.status === 'InActive' ? 'badge-inactive' : 'badge-pending'">
-                {{store.status}}
-            </span>
-        </div>
-        <div class="profile-card-body relative">
-            <div class="profile-avatar" [ngClass]="store.status === 'Active' ? 'border-active' : 
+                    {{store.status}}
+                </span>
+            </div>
+            <div class="profile-card-body relative">
+                <div class="profile-avatar" [ngClass]="store.status === 'Active' ? 'border-active' : 
                                                store.status === 'InActive' ? 'border-inactive' : 'border-pending'">
-                <img [src]="store.store_logo" alt="Avatar" />
+                    <img [src]="store.store_logo" alt="Avatar" />
+                </div>
+                <div class="profile-details">
+                    <h2 class="profile-name">{{store.name}}</h2>
+                    <p class="profile-location">{{store.location}}</p>
+                </div>
+                <div class="profile-actions">
+                    <p-button [severity]="store.status === 'Active' ? 'danger' : 'success'"
+                        [label]="store.status === 'Active' ? 'Deactivate' : 'Activate'" (onClick)="onUpdateStore(store)"
+                        [loading]="isUpdating"></p-button>
+                </div>
             </div>
-            <div class="profile-details">
-                <h2 class="profile-name">{{store.name}}</h2>
-                <p class="profile-location">{{store.location}}</p>
-            </div>
-            <div class="profile-actions">
-                <p-button [severity]="store.status === 'Active' ? 'danger' : 'success'"
-                    [label]="store.status === 'Active' ? 'Deactivate' : 'Activate'" (onClick)="onUpdateStore(store)"
-                    [loading]="isUpdating"></p-button>
-            </div>
+        </div>
+        }
+    </div>
+
+    <div *ngIf="isLoading" class="skeleton-container">
+        <div class="w-full flex flex-wrap justify-content-center gap-8 mt-5" [@fadeAnimation]>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
+            <p-skeleton height="23rem" width="20rem" borderRadius="16px"></p-skeleton>
         </div>
     </div>
-    }
 </div>
 
 <p-toast />

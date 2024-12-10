@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-stores',
@@ -15,7 +16,8 @@ import { DialogModule } from 'primeng/dialog';
     ButtonModule,
     ToastModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    SkeletonModule
   ],
   templateUrl: './stores.component.html',
   styleUrl: './stores.component.scss',
@@ -28,6 +30,7 @@ export class StoresComponent implements OnInit {
   stores: any;
   status: string = '';
   isUpdating = false;
+  isLoading = true;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
@@ -44,15 +47,17 @@ export class StoresComponent implements OnInit {
   }
 
   getStores() {
+    this.isLoading = true;
     if (this.isBrowser) {
       this._adminService.getStores().subscribe(
         (res: any) => {
           console.log("All stores: ", res);
           this.stores = res.stores;
-
+          this.isLoading = false;
+          this._cdr.detectChanges();
         }, (error) => {
           console.error("Error stuff: ", error);
-
+          this.isLoading = false;
         }
       )
     }
