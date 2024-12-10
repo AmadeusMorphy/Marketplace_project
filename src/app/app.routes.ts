@@ -25,15 +25,12 @@ export const routes: Routes = [
                 path: 'merchant-register', loadComponent: () => import('./pages/merchant-register/merchant-register.component').then(m => m.MerchantRegisterComponent)
             },
             {
-                path: 'admin',
-                children: ADMIN_ROUTES
-            },
-            {
                 path: 'merchant',
                 children: MERCHANT_ROUTES
             }
         ]
     },
+    { path: 'admin', children: ADMIN_ROUTES },
     { path: '**', loadComponent: () => import('./pages/error/error.component').then(m => m.ErrorComponent) },
 ];
 

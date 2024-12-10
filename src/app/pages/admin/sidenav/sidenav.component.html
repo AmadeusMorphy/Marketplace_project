@@ -1,0 +1,26 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">A</button>
+        <div class="logo-text" *ngIf="collapsed">Angular</div>
+        <button class="btn-close" *ngIf="collapsed" (click)="closeSideNav()">
+            <i class="pi pi-times"></i>
+        </button>
+    </div>
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
+            <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sidenav-link-icon" [class]="data.icon"></i>
+                <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+            </a>
+        </li>
+        <li *ngIf="collapsed" class="sidenav-nav-item cursor-pointer" [routerLink]="['/home']">
+            <a class="sidenav-nav-link">
+                <i class="sidenav-link-icon pi pi-home"></i>
+                <span class="sidenav-link-text" style="text-decoration: none;">Home</span>
+            </a>
+        </li>
+
+        <button *ngIf="collapsed" class="logout-btn" pButton icon="pi pi-sign-out" label="Logout" (click)="logout()" [loading]="isLoggingOut"></button>
+    </ul>
+</div>

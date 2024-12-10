@@ -52,7 +52,7 @@ export class LoginComponent {
       (res: any) => {
         console.log("Logged:", res);
 
-        this.isLoggingIn = false;
+        // this.isLoggingIn = false;
         this._messagesService.add({
           severity: 'success',
           summary: 'Success',
