@@ -2,7 +2,6 @@
 import { Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { DASHBOARD, MERCHANTS, MESSAGES, PRODUCTS, SETTINGS, STORES } from './admin.constants';
-import { AdminPortalComponent } from './admin-portal/admin-portal.component';
 
 export const ADMIN_ROUTES: Routes = [
     { path: '', redirectTo: DASHBOARD, pathMatch: 'full'},

@@ -6,6 +6,7 @@ import { DASHBOARD, MESSAGES, PRODUCTS, SETTINGS, STORE } from "./merchant.const
 
 export const MERCHANT_ROUTES: Routes = [
 
+    { path: '', redirectTo: DASHBOARD, pathMatch: 'full'},
     {
         path: '',
         component: MerchantComponent,

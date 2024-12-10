@@ -10,7 +10,7 @@ interface SideNavToggle {
 }
 
 @Component({
-  selector: 'app-sidenav-admin',
+  selector: 'app-sidenav-merchant',
   imports: [
     CommonModule,
     RouterLink,
@@ -43,14 +43,9 @@ export class SidenavComponent {
       label: 'Dashboard'
     },
     {
-      routerLink: 'merchants',
-      icon: 'pi pi-users',
-      label: 'Merchants'
-    },
-    {
-      routerLink: 'stores',
+      routerLink: 'store',
       icon: 'pi pi-shop',
-      label: 'Stores'
+      label: 'Store'
     },
     {
       routerLink: 'products',
@@ -76,13 +71,13 @@ export class SidenavComponent {
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
-
+  
   ngOnInit(): void {
     if(this.isBrowser) {
     this.screenWidth = window.innerWidth;
     }
   }
-  
+
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });

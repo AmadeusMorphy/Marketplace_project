@@ -1,6 +1,6 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -8,17 +8,26 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ButtonModule } from 'primeng/button';
 import { MerchantService } from './merchant.service';
+import { MerchantPortalComponent } from "./merchant-portal/merchant-portal.component";
+import { SidenavComponent } from './sidenav/sidenav.component';
+
+
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
+}
 
 @Component({
   selector: 'app-merchant',
   imports: [
     CommonModule,
-    RouterOutlet,
     ButtonModule,
     TabMenuModule,
     ToastModule,
-    ConfirmPopupModule
-  ],
+    ConfirmPopupModule,
+    MerchantPortalComponent,
+    SidenavComponent
+],
   templateUrl: './merchant.component.html',
   styleUrl: './merchant.component.scss',
   animations: [fadeAnimation],
@@ -28,6 +37,10 @@ export class MerchantComponent implements OnInit {
 
   items: MenuItem[] | undefined;
   isBrowser: boolean;
+
+  isSideNavCollapsed = false;
+  screenWidth = 0;
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -39,7 +52,7 @@ export class MerchantComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadMenuBar();
+    // this.loadMenuBar();
     this.initializeBrowserSpecificLogic();
   }
 
@@ -69,34 +82,39 @@ export class MerchantComponent implements OnInit {
     );}
   }
 
-  loadMenuBar() {
-    this.items = [
-      {
-        label: 'Dashboard',
-        icon: 'pi pi-home',
-        routerLink: '/merchant/merchant-dashboard'
-      },
-      {
-        label: 'Store',
-        icon: 'pi pi-shop',
-        routerLink: '/merchant/merchant-store'
-      },
-      {
-        label: 'Products',
-        icon: 'pi pi-box',
-        routerLink: '/merchant/merchant-products'
-      },
-      {
-        label: 'Messages',
-        icon: 'pi pi-inbox',
-        routerLink: '/merchant/merchant-messages'
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-cog',
-        routerLink: '/merchant/merchant-settings'
-      }
-    ];
+  onToggleSideNav(data: SideNavToggle): void {
+    this.screenWidth = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed
   }
+
+  // loadMenuBar() {
+  //   this.items = [
+  //     {
+  //       label: 'Dashboard',
+  //       icon: 'pi pi-home',
+  //       routerLink: '/merchant/merchant-dashboard'
+  //     },
+  //     {
+  //       label: 'Store',
+  //       icon: 'pi pi-shop',
+  //       routerLink: '/merchant/merchant-store'
+  //     },
+  //     {
+  //       label: 'Products',
+  //       icon: 'pi pi-box',
+  //       routerLink: '/merchant/merchant-products'
+  //     },
+  //     {
+  //       label: 'Messages',
+  //       icon: 'pi pi-inbox',
+  //       routerLink: '/merchant/merchant-messages'
+  //     },
+  //     {
+  //       label: 'Settings',
+  //       icon: 'pi pi-cog',
+  //       routerLink: '/merchant/merchant-settings'
+  //     }
+  //   ];
+  // }
 }
 

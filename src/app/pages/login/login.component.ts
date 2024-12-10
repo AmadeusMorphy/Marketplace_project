@@ -65,7 +65,7 @@ export class LoginComponent {
           }, 1300);
         } else if (res.user.userType === 'merchant') {
           setTimeout(() => {
-            this._router.navigate(['/merchant/merchant-dashboard']);
+            this._router.navigate(['/merchant/dashboard']);
           }, 1300);
         } else if (res.user.userType === 'admin') {
           setTimeout(() => {

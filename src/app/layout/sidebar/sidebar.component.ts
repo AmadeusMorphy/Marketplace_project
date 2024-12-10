@@ -55,6 +55,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.isAuthSupscription = this._authService.isAuthenticated$.subscribe(
       res => {
         this.isAuthenticated = res;
+        
         this.checkUser();
         this._cdr.detectChanges();
       }

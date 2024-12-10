@@ -1,5 +1,5 @@
-export const DASHBOARD = 'merchant-dashboard';
-export const STORE = 'merchant-store';
-export const PRODUCTS = 'merchant-products';
-export const MESSAGES = 'merchant-messages';
-export const SETTINGS = 'merchant-settings';
+export const DASHBOARD = 'dashboard';
+export const STORE = 'store';
+export const PRODUCTS = 'products';
+export const MESSAGES = 'messages';
+export const SETTINGS = 'settings';

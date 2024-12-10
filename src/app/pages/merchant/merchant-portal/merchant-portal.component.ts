@@ -5,10 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
-import { fadeAnimation } from '../../../widgets/animations/fade.animation';
 
 @Component({
-  selector: 'app-admin-portal',
+  selector: 'app-merchant-portal',
   imports: [
     CommonModule,
     RouterOutlet,
@@ -17,11 +16,10 @@ import { fadeAnimation } from '../../../widgets/animations/fade.animation';
     ToastModule,
     ConfirmPopupModule
   ],
-  templateUrl: './admin-portal.component.html',
-  styleUrl: './admin-portal.component.scss',
-  animations: [fadeAnimation]
+  templateUrl: './merchant-portal.component.html',
+  styleUrl: './merchant-portal.component.scss'
 })
-export class AdminPortalComponent {
+export class MerchantPortalComponent {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 
