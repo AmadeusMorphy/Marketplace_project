@@ -1,6 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -33,40 +32,20 @@ interface SideNavToggle {
   animations: [fadeAnimation],
   providers: [ConfirmationService, MessageService]
 })
-export class MerchantComponent implements OnInit {
-
+export class MerchantComponent {
+  private isBrowser: boolean;
+  
   items: MenuItem[] | undefined;
-  isBrowser: boolean;
 
   isSideNavCollapsed = false;
   screenWidth = 0;
 
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private _router: Router,
-    private _cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: object,
     private _merchantService: MerchantService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-  }
-
-  ngOnInit() {
-    // this.loadMenuBar();
-    this.initializeBrowserSpecificLogic();
-  }
-
-  private initializeBrowserSpecificLogic() {
-    if(this.isBrowser) {
-    const token = localStorage.getItem('token');
-    const userType = localStorage.getItem('userType');
-
-    if (token && userType === 'merchant') {
-      this.getMerchantData();
-    } else {
-      this._router.navigate(['/404']);
-    }
-  }
   }
 
   getMerchantData() {

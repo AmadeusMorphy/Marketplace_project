@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewChecked, ChangeDetectorRef, Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -21,10 +21,28 @@ import { fadeAnimation } from '../../../widgets/animations/fade.animation';
   styleUrl: './admin-portal.component.scss',
   animations: [fadeAnimation]
 })
-export class AdminPortalComponent {
+export class AdminPortalComponent implements OnInit, AfterViewChecked {
+
+  private isBrowser: boolean;
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
+    private _cdr: ChangeDetectorRef,
+    private _router: Router
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId)
+  }
+
+  ngOnInit(): void {
+
+  }
+
+  ngAfterViewChecked(): void {
+    this._cdr.detectChanges();
+  }
+  
   getBodyClass(): string {
     let styleClass = '';
     if (this.collapsed && this.screenWidth > 768) {

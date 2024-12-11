@@ -147,11 +147,27 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
 
-  /*******ROUTES*******/
+  /************ROUTES************/
 
-public MERCHANT_DASHBOARD = '/merchant/merchant-dashboard';
-public MERCHANT_STORE = '/merchant/merchant-store';
-public MERCHANT_PRODUCTS = '/merchant/merchant-products';
-public MERCHANT_SETTINGS = '/merchant/merchant-settings';
-public MERCHANT_ADD_PRODUCT = '/merchant/merchant-add-product';
+  /*******MERCHANTS*******/
+
+  public MERCHANT_DASHBOARD = '/merchant/dashboard';
+  public MERCHANT_STORE = '/merchant/store';
+  public MERCHANT_PRODUCTS = '/merchant/products';
+  public MERCHANT_SETTINGS = '/merchant/settings';
+  public MERCHANT_ADD_PRODUCT = '/merchant/add-product';
+
+  /***********************/
+
+  
+  /*******ADMIN*******/
+
+  public ADMIN_DASHBOARD = '/admin/dashboard';
+  public ADMIN_MERCHANTS = '/admin/merchants';
+  public ADMIN_STORE = '/admin/stores';
+  public ADMIN_PRODUCTS = '/admin/products';
+  public ADMIN_MESSAGES = '/admin/messages';
+  public ADMIN_SETTINGS = '/admin/settings';
+
+  /***********************/
 }

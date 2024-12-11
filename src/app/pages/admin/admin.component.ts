@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { AdminPortalComponent } from "./admin-portal/admin-portal.component";
 import { SidenavComponent } from "./sidenav/sidenav.component";
+import { CommonModule } from '@angular/common';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -10,14 +11,17 @@ interface SideNavToggle {
 
 @Component({
   selector: 'app-admin',
-  imports: [AdminPortalComponent, SidenavComponent],
+  imports: [
+    AdminPortalComponent, 
+    SidenavComponent,
+    CommonModule
+  ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
   animations: [fadeAnimation]
 })
 
 export class AdminComponent {
-
   isSideNavCollapsed = false;
   screenWidth = 0;
 

@@ -13,7 +13,10 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private _httpClient: HttpClient, private _router: Router) { }
+  constructor(
+    private _httpClient: HttpClient, 
+    private _router: Router,
+  ) { }
 
   onLogin(loginForm: any): Observable<any> {
 
