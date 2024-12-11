@@ -1,16 +1,54 @@
-<nav class="w-full h-6 flex justify-content-around align-items-center">
-    <div class="logo">MarketPlace</div>
-    <div class="items flex align-items-center gap-3">
-        <span class="menuItem" routerLink="/home">Home</span>
-        <span class="menuItem">Stores</span>
-        <span class="menuItem">Products</span>
-        <span class="menuItem">Categories</span>
+<header class="header">
+    <div class="top-bar">
+        <div class="search-container">
+            <input type="text" placeholder="What can we help you find?" class="search-input">
+            <button class="search-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="logo">
+            <span routerLink="/home">Crate&Barrel</span>
+        </div>
+        <div class="user-actions">
+            <a routerLink="/login" class="action-link">Orders & Sign In</a>
+            <a href="#" class="action-link">
+                <span class="icon-heart"></span>
+                <span class="count">0</span>
+            </a>
+            <a href="#" class="action-link">
+                <span class="icon-cart"></span>
+                <span class="count">2</span>
+            </a>
+        </div>
     </div>
-    <div class="profile">
-        <p-toast />
-        <p-menu #menu [model]="items" [popup]="true" />
-        <button pButton class="profBtn" (click)="showSideBar()" [icon]="isAdmin ? 'pi pi-align-justify' : 'pi pi-user'"></button>
-    </div>
-</nav>
 
-<app-sidebar [sideBarVisible]="sideBarVisible" (isSideBarHidden)="hideSideBar()"></app-sidebar>
+    <nav class="secondary-nav">
+        <ul>
+            <li><a href="#">WEDDING REGISTRY</a></li>
+            <li><a href="#">FREE DESIGN SERVICES</a></li>
+            <li><a href="#">TRADE PROGRAM</a></li>
+            <li><a href="#">INSPIRATION</a></li>
+            <li><a href="#">COLLABORATIONS</a></li>
+            <li><a href="#">IN-STOCK</a></li>
+        </ul>
+    </nav>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#">Furniture</a></li>
+            <li><a href="#">Outdoor</a></li>
+            <li><a href="#">Tabletop & Bar</a></li>
+            <li><a href="#">Kitchen</a></li>
+            <li><a href="#">Decor & Pillows</a></li>
+            <li><a href="#">Rugs</a></li>
+            <li><a href="#">Lighting</a></li>
+            <li><a href="#">Bedding & Bath</a></li>
+            <li><a href="#">Gifts</a></li>
+            <li><a href="#">Sale</a></li>
+            <li><a href="#">&kids</a></li>
+        </ul>
+    </nav>
+</header>

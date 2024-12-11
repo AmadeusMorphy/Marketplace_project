@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../auth/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { fadeOut } from '../../widgets/animations/fadeout.animation';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,13 @@ import { MessageService } from 'primeng/api';
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
-  providers: [MessageService]
+  providers: [MessageService, AuthService],
+  animations: [fadeOut]
 })
 export class LoginComponent {
 
   isLoggingIn = false;
+  loggedIn = false;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', (Validators.required, Validators.email)),
@@ -52,12 +55,7 @@ export class LoginComponent {
       (res: any) => {
         console.log("Logged:", res);
 
-        // this.isLoggingIn = false;
-        this._messagesService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Logged in successfully!'
-        })
+        this.loggedIn = true;
 
         if (res.user.userType === 'customer') {
           setTimeout(() => {
@@ -69,16 +67,11 @@ export class LoginComponent {
           }, 1300);
         } else if (res.user.userType === 'admin') {
           setTimeout(() => {
-            this._router.navigate(['/admin/dashboard']);
+            this._router.navigate(['/admin']);
           }, 1300);
         }
       }, () => {
         this.isLoggingIn = false;
-        this._messagesService.add({
-          severity: 'error',
-          summary: 'error',
-          detail: 'Wrong email or password! '
-        })
       }
     );
 

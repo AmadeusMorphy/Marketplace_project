@@ -147,3 +147,17 @@ $displacement: 3px;
         margin: 20px;
     }
 }
+
+@keyframes fadeOut {
+   0% {
+    opacity: 1;
+   }
+   100% {
+    opacity: 0;
+   }
+}
+
+.logged {
+    animation: fadeOut .45s;
+    opacity: 0;
+}

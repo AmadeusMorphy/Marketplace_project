@@ -3,6 +3,8 @@ import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { AdminPortalComponent } from "./admin-portal/admin-portal.component";
 import { SidenavComponent } from "./sidenav/sidenav.component";
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -14,10 +16,12 @@ interface SideNavToggle {
   imports: [
     AdminPortalComponent, 
     SidenavComponent,
-    CommonModule
+    CommonModule,
+    ToastModule
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
+  providers: [MessageService],
   animations: [fadeAnimation]
 })
 

@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -16,26 +17,35 @@ export class AuthService {
   constructor(
     private _httpClient: HttpClient, 
     private _router: Router,
+    private _messageService: MessageService
   ) { }
 
   onLogin(loginForm: any): Observable<any> {
 
     return this._httpClient.post(`${environment.serverAuth}login`, loginForm).pipe(
       tap((res: any) => {
-
-
         const User = res.user;
         localStorage.setItem('token', res.token);
         localStorage.setItem('userId', User.id);
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
         localStorage.setItem('fullName', User.fullName);
+
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Logged in'
+        });
+
         this.isAuthenticatedSubject.next(true);
       }, (error) => {
-        console.error("Error stuff: ", error);
-      }
-      )
-    )
+        console.error('Error during login:', error);
+        this._messageService.add({
+          severity: 'error',
+          summary: 'Login Failed',
+          detail: error.error?.message || 'An unexpected error occurred.'
+        });
+      })
+    );
   }
 
   onRegister(registerForm: any): Observable<any> {

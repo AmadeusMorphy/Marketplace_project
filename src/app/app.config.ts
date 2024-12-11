@@ -24,6 +24,9 @@ import { ImageModule } from 'primeng/image';
 import { SkeletonModule } from 'primeng/skeleton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ChipsModule } from 'primeng/chips';
+import { MessageService } from 'primeng/api';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,6 +47,7 @@ export const appConfig: ApplicationConfig = {
     SidebarModule,
     AvatarModule,
     StyleClassModule,
+    MessageService,
     DropdownModule,
     TableModule,
     TabMenuModule,
@@ -53,7 +57,9 @@ export const appConfig: ApplicationConfig = {
     ImageModule,
     SkeletonModule,
     InputTextareaModule,
-    ChipsModule
+    ChipsModule,
+    IconFieldModule,
+    InputIconModule
   ]
 
 };

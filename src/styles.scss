@@ -8,6 +8,11 @@
     src: url('./assets/Parkinsans-VariableFont_wght.ttf');
 }
 
+@font-face {
+    font-family: logo;
+    src: url('./assets/Kamerik105-Bold.otf');
+}
+
 :root {
     --purple: #824bff;
     --red: rgb(238, 15, 15);
@@ -34,4 +39,8 @@ button {
 .add-to-cart-btn:hover {
     background: #6928ff;
     color: #f5f5f7;
+}
+
+::ng-deep :root{
+    --primary-color: #000 !important;
 }

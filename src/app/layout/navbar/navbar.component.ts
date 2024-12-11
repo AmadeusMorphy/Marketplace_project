@@ -8,6 +8,9 @@ import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../auth/auth.service';
 import { Subject, Subscription } from 'rxjs';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { InputTextModule } from 'primeng/inputtext';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +21,10 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
     ToastModule,
     MenuModule,
     ButtonModule,
-    SidebarComponent
+    SidebarComponent,
+    InputTextModule,
+    IconFieldModule,
+    InputIconModule
 ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
