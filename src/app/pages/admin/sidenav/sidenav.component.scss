@@ -8,6 +8,7 @@
     height: 100vh;
     box-shadow: 0.063rem 0 2px 0 var(--primary-color);
     transition: all 0.3s ease-in-out;
+
     .logo-container {
 
         display: flex;
@@ -97,6 +98,7 @@
         .sidenav-nav-link {
             background-color: white;
             color: var(--primary-color);
+
             .sidenav-link-icon {
                 color: var(--primary-color);
             }
@@ -110,6 +112,7 @@
     display: flex;
     border: 2px solid white;
     align-items: center;
+
     .sidenav-link-icon,
     .sidenav-link-text {
         color: var(--primary-color) !important
@@ -132,8 +135,8 @@
 }
 
 .p-button .p-button-label {
-    flex: none !important; 
-     margin-left: 28px !important; 
-     font-size: 15px !important; 
-     font-weight: 500 !important;
+    flex: none !important;
+    margin-left: 28px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
 }

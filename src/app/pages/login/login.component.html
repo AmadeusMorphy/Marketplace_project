@@ -1,39 +1,38 @@
 <div class="wrapper" [ngClass]="loggedIn ? 'logged' : ''">
-    <div class="session">
-      <div class="left">
-        <img src="/assets/logo.png" alt="Crate & Barrel Logo" class="logo">
-      </div>
-      <form class="log-in" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <div class="formContainer">
-          <div class="loginSec">
-            <div class="title">
-              <h4>Welcome Back</h4>
-              <p>Log in to your account to view today's offers:</p>
-            </div>
-            <div class="inputs">
-              <div class="form-wrapper">
-                <p-floatLabel>
-                  <input id="email" type="email" pInputText formControlName="email" />
-                  <label for="email">Email</label>
-                </p-floatLabel>
-              </div>
-              <div class="form-wrapper">
-                <p-floatLabel>
-                  <input id="password" type="password" pInputText formControlName="password" />
-                  <label for="password">Password</label>
-                </p-floatLabel>
-              </div>
-            </div>
-          </div>
-          <div class="btn">
-            <button pButton type="submit" [disabled]="loginForm.invalid" [label]="isLoggingIn ? 'Logging in...' : 'Login'" [loading]="isLoggingIn"></button>
-          </div>
-          <a href="#" class="forgot-password">Forgot password?</a>
-        </div>
-      </form>
+  <div class="session">
+    <div class="left">
+      <img src="/assets/images/logowhite.png" alt="Crate & Barrel Logo" class="logo">
     </div>
+    <form class="log-in" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="formContainer">
+        <div class="loginSec">
+          <div class="title">
+            <h4>Welcome Back</h4>
+            <p>Log in to your account to view today's offers:</p>
+          </div>
+          <div class="inputs">
+            <div class="form-wrapper">
+              <p-floatLabel>
+                <input id="email" type="email" pInputText formControlName="email" />
+                <label for="email">Email</label>
+              </p-floatLabel>
+            </div>
+            <div class="form-wrapper">
+              <p-floatLabel>
+                <input id="password" type="password" pInputText formControlName="password" />
+                <label for="password">Password</label>
+              </p-floatLabel>
+            </div>
+          </div>
+        </div>
+        <div class="btn">
+          <button pButton type="submit" [disabled]="loginForm.invalid" [label]="isLoggingIn ? 'Logging in...' : 'Login'"
+            [loading]="isLoggingIn"></button>
+        </div>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </div>
+    </form>
   </div>
-  
-  <p-toast></p-toast>
-  
-  
+</div>
+
+<p-toast></p-toast>

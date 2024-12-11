@@ -1,5 +1,5 @@
 @import "primeflex/primeflex.css";
-@import "primeng/resources/themes/lara-light-purple/theme.css";
+@import "primeng/resources/themes/aura-light-noir/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: logo;
-    src: url('./assets/Kamerik105-Bold.otf');
+    src: url('./assets/RawglyRegular-MVyWP.otf');
 }
 
 :root {
@@ -25,7 +25,8 @@ body {
     font-family: nzd;
 }
 
-button {
+button,
+input {
     transition: .2s ease-in-out;
 }
 
@@ -54,4 +55,14 @@ button {
         pointer-events: none;
     }
 
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

@@ -7,10 +7,11 @@ import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { AuthService } from '../../auth/auth.service';
 import { Subject, Subscription } from 'rxjs';
-import { SidebarComponent } from "../sidebar/sidebar.component";
+// import { SidebarComponent } from "../sidebar/sidebar.component";
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { fadeAnimation } from '../../widgets/animations/fade.animation';
 
 @Component({
   selector: 'app-navbar',
@@ -21,13 +22,13 @@ import { InputIconModule } from 'primeng/inputicon';
     ToastModule,
     MenuModule,
     ButtonModule,
-    SidebarComponent,
     InputTextModule,
     IconFieldModule,
     InputIconModule
-],
+  ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrl: './navbar.component.scss',
+  animations: [fadeAnimation]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
@@ -61,10 +62,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       const token = localStorage.getItem('token');
       const userType = localStorage.getItem('userType');
 
-      if(token && userType) {
+      if (token && userType) {
         this._authService.updateAuthState(true);
       }
-      if(userType === 'admin') {
+      if (userType === 'admin') {
         this.isAdmin = true;
       }
     }
@@ -75,8 +76,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
 
       const userType = localStorage.getItem('userType');
-      
-      if(this.isAuthenticated && userType == 'admin') {
+
+      if (this.isAuthenticated && userType == 'admin') {
         this.isAdmin = true;
         this._cdr.detectChanges();
       } else {
@@ -84,39 +85,39 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this._cdr.detectChanges();
       }
 
-    if(this.isAuthenticated) {
-      this.items = [
-        {
-          label: 'User',
-          items: [
-            {
-              label: 'Logout',
-              icon: 'pi pi-sign-out',
-              command: () => this.onLogout()
-            }
-          ]
-        }
-      ];
-    } else {
-      this.items = [
-        {
-          label: 'User',
-          items: [
-            {
-              label: 'Login',
-              icon: 'pi pi-key',
-              routerLink: ['/login']
-            },
-            {
-              label: 'Register',
-              icon: 'pi pi-user-plus',
-              routerLink: ['/register']
-            }
-          ]
-        }
-      ];
+      if (this.isAuthenticated) {
+        this.items = [
+          {
+            label: 'User',
+            items: [
+              {
+                label: 'Logout',
+                icon: 'pi pi-sign-out',
+                command: () => this.onLogout()
+              }
+            ]
+          }
+        ];
+      } else {
+        this.items = [
+          {
+            label: 'User',
+            items: [
+              {
+                label: 'Login',
+                icon: 'pi pi-key',
+                routerLink: ['/login']
+              },
+              {
+                label: 'Register',
+                icon: 'pi pi-user-plus',
+                routerLink: ['/register']
+              }
+            ]
+          }
+        ];
+      }
     }
-  }
 
     this._cdr.detectChanges();
   }
@@ -136,7 +137,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this._unsubscribeAll.next();
     this._unsubscribeAll.complete();
 
-    if(this.authSubscription) {
+    if (this.authSubscription) {
       this.authSubscription.unsubscribe();
       this._cdr.detectChanges()
     }
