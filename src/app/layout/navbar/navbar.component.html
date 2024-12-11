@@ -22,6 +22,12 @@
                 <i class="pi pi-shopping-cart"></i>
                 <span class="count">2</span>
             </a>
+            <div class="profile">
+                <p-toast />
+                <p-menu #menu [model]="items" [popup]="true" />
+                <button pButton class="profBtn" (click)="showSideBar()"
+                    [icon]="isAdmin ? 'pi pi-align-justify' : 'pi pi-user'"></button>
+            </div>
         </div>
     </div>
 
@@ -52,3 +58,5 @@
         </ul>
     </nav>
 </header>
+
+<app-sidebar [sideBarVisible]="sideBarVisible" (isSideBarHidden)="hideSideBar()"></app-sidebar>

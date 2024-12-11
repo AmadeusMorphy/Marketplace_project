@@ -12,6 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +25,8 @@ import { fadeAnimation } from '../../widgets/animations/fade.animation';
     ButtonModule,
     InputTextModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
+    SidebarComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
