@@ -51,7 +51,7 @@ export class MerchantRegisterComponent {
     this.registerForm = new FormGroup({
       fullName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
-      country: new FormControl('', Validators.required),
+      country: new FormControl([], Validators.required),
       password: new FormControl('', [
         Validators.required,
         this.passwordComplexityValidator()
@@ -74,7 +74,8 @@ export class MerchantRegisterComponent {
 
   onCountryChange(event: any) {
     this.selectedCountry = event.value;
-
+    console.log(this.selectedCountry);
+    
     this.registerForm.get('country')?.setValue(this.selectedCountry);
     console.log(this.registerForm.value);
   }

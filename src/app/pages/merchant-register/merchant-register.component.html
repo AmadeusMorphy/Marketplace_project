@@ -17,7 +17,7 @@
             </div>
 
             <div class="form-wrapper">
-                <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
+                <p-dropdown [options]="countries" [optionLabel]="'country'"
                     formControlName="country" [filter]="true" [style]="{width: '100%'}" placeholder="Select a country"
                     (onChange)="onCountryChange($event)">
                     <ng-template let-country pTemplate="item">

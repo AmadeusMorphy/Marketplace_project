@@ -31,7 +31,7 @@
             <div class="col-12 md:col-6">
                 <div class="field">
                     <label for="storeName" class="font-bold">Store Location</label>
-                    <p-dropdown [options]="countries" [optionLabel]="'country'" [optionValue]="'country'"
+                    <p-dropdown [options]="countries" [optionLabel]="'country'"
                         formControlName="location" [filter]="true" [style]="{width: '100%'}"
                         placeholder="Select a country" (onChange)="onCountryChange($event)">
                         <ng-template let-country pTemplate="item">

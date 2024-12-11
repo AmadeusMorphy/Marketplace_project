@@ -54,7 +54,7 @@ export class MerchantCreateStoreComponent implements OnInit {
 
   storeForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    location: new FormControl('', Validators.required),
+    location: new FormControl([], Validators.required),
     store_logo: new FormControl('', Validators.required),
     store_bg: new FormControl('', Validators.required),
     reg_number: new FormControl('', Validators.required),
@@ -97,7 +97,9 @@ export class MerchantCreateStoreComponent implements OnInit {
   }
 
   onCountryChange(event: any) {
+    
     this.selectedCountry = event.value;
+    console.log(this.selectedCountry);
 
     this.storeForm.get('location')?.setValue(this.selectedCountry);
   }
@@ -231,6 +233,7 @@ export class MerchantCreateStoreComponent implements OnInit {
           summary: 'Success',
           detail: 'Store created successfully'
         });
+        this.visibleChange.emit(false);
         this.closeDialog();
       },
       error: (error) => {
@@ -253,6 +256,6 @@ export class MerchantCreateStoreComponent implements OnInit {
     this.storeBg = null;
     this.selectedLogo = null;
     this.selectedBg = null;
-    this.visibleChange.emit(false);
+    this.visible = false;
   }
 }

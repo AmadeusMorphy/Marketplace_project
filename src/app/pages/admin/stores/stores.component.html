@@ -1,15 +1,22 @@
 <div class="container mt-3">
 
-    <div class="cards-container w-full flex flex-wrap justify-content-start gap-8 mt-5" *ngIf="!isLoading" [@fadeAnimation] [@.disabled]="isLoading">
+    <div class="cards-container w-full flex flex-wrap justify-content-start gap-8 mt-5" *ngIf="!isLoading"
+        [@fadeAnimation] [@.disabled]="isLoading">
         @for (store of stores; track store._id) {
 
         <div class="profile-card">
             <div class="profile-card-header relative">
-                <img [src]="store.store_bg" alt="Banner" class="banner-image" />
+                <div class="dark-overlay">
+                    <img [src]="store.store_bg" alt="Banner" class="banner-image" />
+                </div>
                 <span class="status-badge" [ngClass]="store.status === 'Active' ? 'badge-active' : 
                                              store.status === 'InActive' ? 'badge-inactive' : 'badge-pending'">
                     {{store.status}}
                 </span>
+                <div *ngIf="store?.location?.flag" class="flagimg">
+                    <img [src]="'https://flagcdn.com/' + store?.location?.code + '.svg'" height="20px" width="20px"
+                        class="flag" alt="">
+                </div>
             </div>
             <div class="profile-card-body relative">
                 <div class="profile-avatar" [ngClass]="store.status === 'Active' ? 'border-active' : 
@@ -18,7 +25,10 @@
                 </div>
                 <div class="profile-details">
                     <h2 class="profile-name">{{store.name}}</h2>
-                    <p class="profile-location">{{store.location}}</p>
+                    <div class="location flex justify-content-center align-items-center gap-2">
+                        <i class="pi pi-map-marker"></i>
+                        <p class="profile-location">{{store?.location?.country || 'N/A'}}</p>
+                    </div>
                 </div>
                 <div class="profile-actions">
                     <p-button [severity]="store.status === 'Active' ? 'danger' : 'success'"
