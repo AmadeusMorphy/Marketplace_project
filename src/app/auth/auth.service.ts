@@ -42,7 +42,7 @@ export class AuthService {
         this._messageService.add({
           severity: 'error',
           summary: 'Login Failed',
-          detail: error.error?.message || 'An unexpected error occurred.'
+          detail: error.error?.message || 'Check your email and password.'
         });
       })
     );

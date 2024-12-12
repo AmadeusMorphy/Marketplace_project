@@ -1,5 +1,5 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +13,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -26,13 +28,22 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
     InputTextModule,
     IconFieldModule,
     InputIconModule,
-    SidebarComponent
+    SidebarComponent,
+    InputSwitchModule,
+    FormsModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   animations: [fadeAnimation]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  private _unsubscribeAll: Subject<void> = new Subject<void>();
+  private authSubscription: Subscription | undefined;
+  private isBrowser: boolean;
+
+  #document = inject(DOCUMENT);
+  isDarkMode = false;
+  isThemeLoading = false;
 
   items: MenuItem[] | undefined;
 
@@ -40,17 +51,42 @@ export class NavbarComponent implements OnInit, OnDestroy {
   sideBarVisible = false;
   isAdmin = false;
   isLoading = false;
-  private authSubscription: Subscription | undefined;
-  private _unsubscribeAll: Subject<void> = new Subject<void>();
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService
-  ) { }
+  ) { 
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit() {
+    this.isThemeLoading = true;
 
+    if(this.isBrowser) {
+      const theme = localStorage.getItem('theme');
+      const linkElement = this.#document.getElementById(
+        'app-theme',
+      ) as HTMLLinkElement;
+
+      if(theme) {
+        if(theme === 'light') {
+          linkElement.href = 'theme-light.css';
+          this.isDarkMode = false;
+          this.isThemeLoading = false;
+        } else {
+          linkElement.href = 'theme-dark.css';
+          this.isDarkMode = true;
+          this.isThemeLoading = false;
+        }
+      } else {
+        linkElement.href = 'theme-light.css';
+        this.isDarkMode = false;
+        this.isThemeLoading = false;
+        localStorage.setItem('theme', 'light');
+      }
+      this._cdr.detectChanges();
+    }
 
     this.authSubscription = this._authService.isAuthenticated$.subscribe(
       res => {
@@ -69,6 +105,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
       }
       if (userType === 'admin') {
         this.isAdmin = true;
+      }
+    }
+  }
+
+  toggleLightDark() {
+    if (this.isBrowser) {
+      const theme = localStorage.getItem('theme');
+
+      const linkElement = this.#document.getElementById(
+        'app-theme',
+      ) as HTMLLinkElement;
+      if (linkElement.href.includes('light')) {
+        linkElement.href = 'theme-dark.css';
+        localStorage.setItem('theme', 'dark');
+        this.isDarkMode = true;
+      } else {
+        linkElement.href = 'theme-light.css';
+        localStorage.setItem('theme', 'light');
+        this.isDarkMode = false;
       }
     }
   }

@@ -27,6 +27,7 @@ import { ChipsModule } from 'primeng/chips';
 import { MessageService } from 'primeng/api';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -59,7 +60,8 @@ export const appConfig: ApplicationConfig = {
     InputTextareaModule,
     ChipsModule,
     IconFieldModule,
-    InputIconModule
+    InputIconModule,
+    InputSwitchModule
   ]
 
 };
