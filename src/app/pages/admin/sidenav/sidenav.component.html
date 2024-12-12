@@ -12,7 +12,8 @@
                 [routerLinkActiveOptions]="{exact: true}">
                 <i class="sidenav-link-icon" [class]="data.icon"></i>
                 <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
-                <span *ngIf="!collapsed" class="floating-label">{{data.label}}</span>
+                <span *ngIf="!collapsed" class="floating-label"
+                    [ngClass]="!collapsed ? 'fadeIn' : ''">{{data.label}}</span>
             </a>
         </li>
         <li class="sidenav-nav-item cursor-pointer" [routerLink]="['/home']">
@@ -22,6 +23,11 @@
                 <span *ngIf="!collapsed" class="floating-label">Home</span>
             </a>
         </li>
-        <button *ngIf="collapsed" class="logout-btn" pButton icon="pi pi-sign-out" label="Logout" (click)="logout()" [loading]="isLoggingOut"></button>
+        <div class="logout-btn">
+            <button class="" [ngClass]="!collapsed ? 'logout-btn-collapsed' : 'logout-btn-not-collapsed '" pButton
+                icon="pi pi-sign-out" [label]="collapsed ? 'Logout' : ''" (click)="logout()"
+                [loading]="isLoggingOut"></button>
+            <span *ngIf="!collapsed" class="floating-label">Logout</span>
+        </div>
     </ul>
 </div>

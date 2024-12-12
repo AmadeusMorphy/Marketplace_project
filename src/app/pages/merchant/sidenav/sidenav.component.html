@@ -22,6 +22,11 @@
                 <span *ngIf="!collapsed" class="floating-label">Home</span>
             </a>
         </li>
-        <button *ngIf="collapsed" class="logout-btn" pButton icon="pi pi-sign-out" label="Logout" (click)="logout()" [loading]="isLoggingOut"></button>
+        <div class="logout-btn">
+            <button class="" [ngClass]="!collapsed ? 'logout-btn-collapsed' : 'logout-btn-not-collapsed '" pButton
+                icon="pi pi-sign-out" [label]="collapsed ? 'Logout' : ''" (click)="logout()"
+                [loading]="isLoggingOut"></button>
+            <span *ngIf="!collapsed" class="floating-label">Logout</span>
+        </div>
     </ul>
 </div>
