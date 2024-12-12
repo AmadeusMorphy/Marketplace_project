@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NgModule } from '@angular/core';
 import { authMerchantGuard } from './pages/merchant/auth-merchant.guard';
 import { authAdminGuard } from './pages/admin/authAdmin/auth-admin.guard';
+import { LoginComponent } from './pages/login/login.component';
 // import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
@@ -17,7 +18,7 @@ export const routes: Routes = [
             },
             {
                 path: 'login', 
-                loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
+                component: LoginComponent
             },
             {
                 path: 'register', 
