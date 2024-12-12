@@ -66,7 +66,7 @@
         </ul>
     </nav>
 
-    <nav class="main-nav">
+    <nav class="main-nav" [ngClass]="isDarkMode ? 'lightMode' : 'darkMode'">
         <ul>
             <li><a href="#">Furniture</a></li>
             <li><a href="#">Outdoor</a></li>

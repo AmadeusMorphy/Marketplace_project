@@ -68,6 +68,7 @@ export class SidenavComponent {
       label: 'Settings'
     }
   ];
+  
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _authService: AuthService,

@@ -1,5 +1,5 @@
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, inject, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -32,8 +32,9 @@ interface SideNavToggle {
   animations: [fadeAnimation],
   providers: [ConfirmationService, MessageService]
 })
-export class MerchantComponent {
+export class MerchantComponent implements OnInit {
   private isBrowser: boolean;
+  #document = inject(DOCUMENT);
   
   items: MenuItem[] | undefined;
 
@@ -43,9 +44,31 @@ export class MerchantComponent {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
-    private _merchantService: MerchantService
+    private _merchantService: MerchantService,
+    private _cdr: ChangeDetectorRef
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  ngOnInit(): void {
+    if(this.isBrowser) {
+      const theme = localStorage.getItem('theme');
+      const linkElement = this.#document.getElementById(
+        'app-theme',
+      ) as HTMLLinkElement;
+
+      if(theme) {
+        if(theme === 'light') {
+          linkElement.href = 'theme-light.css';
+        } else {
+          linkElement.href = 'theme-dark.css';
+        }
+      } else {
+        linkElement.href = 'theme-light.css';
+        localStorage.setItem('theme', 'light');
+      }
+      this._cdr.detectChanges();
+    }
   }
 
   getMerchantData() {
