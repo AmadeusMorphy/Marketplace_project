@@ -2,8 +2,10 @@
     width: 300px;
     border-radius: 10px;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: .3s ease-in-out;
 
     .profile-card-header {
         .dark-overlay {
@@ -41,7 +43,7 @@
             border-radius: 15px;
             font-size: 0.8rem;
             font-weight: bold;
-            color: #ffffff;
+            color: var(--primary-color-text);
             text-transform: uppercase;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 

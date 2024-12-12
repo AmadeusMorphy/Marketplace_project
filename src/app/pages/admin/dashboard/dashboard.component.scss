@@ -54,13 +54,18 @@
 }
 
 .metric-card {
-    background-color: white;
+    background-color: var(--surface-card);
+    border: 1px solid var(--surface-border);
     border-radius: 0.75rem;
     padding: 1.5rem;
     display: flex;
     align-items: center;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: 0.3s ease-in-out !important;
+}
+
+.metric-card:hover {
+    background-color: var(--surface-hover);
 }
 
 
@@ -135,11 +140,12 @@
 }
 
 .chart-container {
-    background-color: white;
+    background-color: var(--surface-card);
     border-radius: 0.75rem;
     padding: 1.5rem;
     box-shadow: 0 4px 6px 0px rgba(0, 0, 0, 0.1);
     transition: .3s ease-in-out;
+    border: 1px solid var(--surface-border);
 }
 
 .chart-container:hover {
@@ -149,21 +155,22 @@
 .chart-header h2 {
     margin: 0 0 1rem;
     font-size: 1.25rem;
-    color: #374151;
+    color: var(--highlight-text-color);
 }
 
 /* Transactions Table */
 .transactions-section {
-    background-color: white;
+    background-color: var(--surface-card);
     border-radius: 0.75rem;
     padding: 1.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--surface-border);
 }
 
 .transactions-header h2 {
     margin: 0 0 1rem;
     font-size: 1.25rem;
-    color: #374151;
+    color: var(--highlight-text-color);
 }
 
 .transaction-status {

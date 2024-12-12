@@ -1,8 +1,9 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Component, Output, Inject, PLATFORM_ID, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Output, Inject, PLATFORM_ID, EventEmitter, ChangeDetectorRef, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../auth/auth.service';
+import { fadeAnimation } from '../../../widgets/animations/fade.animation';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -18,14 +19,16 @@ interface SideNavToggle {
     ButtonModule
   ],
   templateUrl: './sidenav.component.html',
-  styleUrl: './sidenav.component.scss'
+  styleUrl: './sidenav.component.scss',
+  animations: [fadeAnimation]
 })
 
-export class SidenavComponent {
+export class SidenavComponent implements OnInit, AfterViewChecked {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter()
 
   isBrowser: boolean;
   isLoggingOut = false;
+  isLoggedOut = true;
   isAuthenticated = false;
 
   userName: any;
@@ -84,6 +87,9 @@ export class SidenavComponent {
     }
   }
   
+  ngAfterViewChecked(): void {
+    this._cdr.detectChanges();
+  }
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
@@ -99,6 +105,7 @@ export class SidenavComponent {
 
     this._authService.onLogout().subscribe(
       () => {
+        this.isLoggedOut = true;
         this.isLoggingOut = false;
       }, (error) => {
         console.error("Error logging out: ", error);

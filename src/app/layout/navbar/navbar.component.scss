@@ -90,50 +90,101 @@ body {
                 font-size: 0.8rem;
             }
         }
+        .action-link-a {
+          transition: width 0.2s ease-in-out;
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--primary-color);
+        }
+
+        &:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+            &::after {
+                width: 100%;
+            }
+        }
+        }
     }
 }
 
 // Navigation Styles
 .secondary-nav {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid;
-    ul {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        list-style: none;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid;
+  ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
 
-        a {
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-            color: var(--primary-color);
-            &:hover {
-                color: $primary-color;
-            }
-        }
-    }
+      a {
+          text-decoration: none;
+          font-size: 0.8rem;
+          letter-spacing: 0.5px;
+          color: var(--primary-color);
+          position: relative;
+          
+          &::after {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+              width: 0;
+              height: 1px;
+              background-color: var(--primary-color);
+              transition: width 0.2s ease-in-out;
+          }
+
+          &:hover {
+              color: var(--primary-color);
+              
+              &::after {
+                  width: 100%;
+              }
+          }
+      }
+  }
 }
 
 .main-nav {
-    padding: 1rem 0;
+  padding: 1rem 0;
 
-    ul {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        list-style: none;
+  ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
 
-        a {
-            text-decoration: none;
-            color: var(--primary-color-text);
-            font-size: 0.9rem;
+      a {
+          text-decoration: none;
+          color: var(--primary-color-text);
+          font-size: 0.9rem;
+          position: relative;
 
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
+          &::after {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+              width: 0;
+              height: 1px;
+              background-color: var(--primary-color-text);
+              transition: width 0.2s ease-in-out;
+          }
+
+          &:hover {
+              &::after {
+                  width: 100%;
+              }
+          }
+      }
+  }
 }
 
 // Hero Slider Styles

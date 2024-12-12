@@ -1,4 +1,4 @@
-<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+<div class="sidenav fadeIn" [ngClass]="collapsed ? 'sidenav-collapsed': ''" [ngClass]="isLoggedOut ? 'fadeOut' : ''">
     <div class="logo-container">
         <button class="logo" (click)="toggleCollapse()">A</button>
         <div class="logo-text" *ngIf="collapsed">Admin</div>
