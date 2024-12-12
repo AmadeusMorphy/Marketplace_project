@@ -15,6 +15,7 @@ import { fadeAnimation } from '../../widgets/animations/fade.animation';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
+import { NavbarService } from '../../services/navbar/navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -55,7 +56,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private _cdr: ChangeDetectorRef,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _navbarService: NavbarService
   ) { 
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -64,6 +66,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.isThemeLoading = true;
 
     if(this.isBrowser) {
+      this._navbarService.checkTheme();
+
       const theme = localStorage.getItem('theme');
       const linkElement = this.#document.getElementById(
         'app-theme',
@@ -90,7 +94,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     this.authSubscription = this._authService.isAuthenticated$.subscribe(
       res => {
-        this.isAuthenticated = res //will be true or false;
+        this.isAuthenticated = res;
         this.loadMenuItems();
         this._cdr.detectChanges()
       }
@@ -111,6 +115,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleLightDark() {
     if (this.isBrowser) {
+      this._navbarService.toggleDarkMode()
+      this._navbarService.isDarkMode$.subscribe(
+        res => {
+          if(res === true) {
+            this.isDarkMode = true;
+          } else {
+            this.isDarkMode = false;
+          }
+          this._cdr.detectChanges()
+        }
+      )
       const theme = localStorage.getItem('theme');
 
       const linkElement = this.#document.getElementById(
@@ -119,11 +134,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if (linkElement.href.includes('light')) {
         linkElement.href = 'theme-dark.css';
         localStorage.setItem('theme', 'dark');
-        this.isDarkMode = true;
       } else {
         linkElement.href = 'theme-light.css';
         localStorage.setItem('theme', 'light');
-        this.isDarkMode = false;
       }
     }
   }

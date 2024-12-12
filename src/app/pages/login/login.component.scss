@@ -9,7 +9,6 @@ $font-primary: Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $gray-light;
   padding: 20px;
 }
 
@@ -17,14 +16,13 @@ $font-primary: Arial, sans-serif;
   display: flex;
   width: 100%;
   max-width: 800px;
-  background: $white;
   border-radius: 4px;
+  border: 2px solid;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .left {
   width: 40%;
-  background-color: $primary-color;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,6 +32,18 @@ $font-primary: Arial, sans-serif;
     max-width: 100%;
     height: auto;
   }
+}
+
+.left-dark {
+  background-color: #000000;
+}
+
+.left-light {
+  background-color: #ffffff;
+}
+
+.logo-inverted {
+  filter: invert(1);
 }
 
 .log-in {
@@ -53,7 +63,6 @@ $font-primary: Arial, sans-serif;
   h4 {
     font-size: 24px;
     font-weight: 600;
-    color: $primary-color;
     margin-bottom: 8px;
   }
 

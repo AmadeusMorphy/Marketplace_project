@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, inject, PLATFORM_ID } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,7 @@ import { AuthService } from '../../auth/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { fadeOut } from '../../widgets/animations/fadeout.animation';
+import { NavbarService } from '../../services/navbar/navbar.service';
 
 @Component({
   selector: 'app-login',
@@ -27,26 +28,48 @@ import { fadeOut } from '../../widgets/animations/fadeout.animation';
   animations: [fadeOut]
 })
 export class LoginComponent {
+  private isBrowser: boolean;
+
+  #document = inject(DOCUMENT);
+  isDarkMode = false;
 
   isLoggingIn = false;
   loggedIn = false;
-
+  
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', (Validators.required, Validators.email)),
     password: new FormControl('', (Validators.required))
   })
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     private _router: Router,
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
-    private _messagesService: MessageService
-  ) { }
-
-  ngOnInit(): void {
-
+    private _messagesService: MessageService,
+    private _navbarService: NavbarService
+  ) { 
+    this.isBrowser = isPlatformBrowser(this.platformId)
   }
 
+  ngOnInit(): void {
+    if(this.isBrowser) {
+
+      this._navbarService.checkTheme();
+
+      this._navbarService.isDarkMode$.subscribe(
+        res => {
+          if(res === true) {
+            this.isDarkMode = true;
+          } else {
+            this.isDarkMode = false;
+          }
+        }
+      )
+      this._cdr.detectChanges();
+    }
+    
+  }
   onSubmit() {
     this.isLoggingIn = true;
     console.log(this.loginForm.value);
