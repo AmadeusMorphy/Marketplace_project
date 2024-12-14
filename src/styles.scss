@@ -65,6 +65,7 @@ input {
         opacity: 1;
     }
 }
+
 .fadeIn {
     animation: fadeIn .8s !important;
 }
@@ -78,6 +79,11 @@ input {
         opacity: 0;
     }
 }
+
 .fadeOut {
     animation: fadeOut .3s;
+}
+
+.p-dialog-mask.p-component-overlay.p-component-overlay-enter.p-dialog-mask-scrollblocker.ng-star-inserted {
+    backdrop-filter: blur(4px) !important;
 }

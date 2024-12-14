@@ -1,7 +1,8 @@
-<div class="wrapper" [ngClass]="loggedIn ? 'logged' : ''">
+<div class="wrapper">
   <div class="session">
     <div class="left" [ngClass]="isDarkMode ? 'left-light' : 'left-dark'">
-      <img src="/assets/images/logowhite.png" alt="Crate & Barrel Logo" class="logo" [ngClass]="!isDarkMode ? '' : 'logo-inverted'">
+      <img src="/assets/images/logowhite.png" alt="Crate & Barrel Logo" class="logo"
+        [ngClass]="!isDarkMode ? '' : 'logo-inverted'">
 
       <!-- <div class="logo flex flex-column gap-3">
         <div class="bag flex justify-content-center align-items-center">

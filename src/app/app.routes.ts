@@ -17,15 +17,15 @@ export const routes: Routes = [
                 path: 'home', component: HomeComponent
             },
             {
-                path: 'login', 
+                path: 'login',
                 component: LoginComponent
             },
             {
-                path: 'register', 
+                path: 'register',
                 loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
             },
             {
-                path: 'merchant-register', 
+                path: 'merchant-register',
                 loadComponent: () => import('./pages/merchant-register/merchant-register.component').then(m => m.MerchantRegisterComponent)
             },
         ]
@@ -36,9 +36,9 @@ export const routes: Routes = [
         canActivate: [authMerchantGuard]
     },
     {
-        path: 'admin', 
+        path: 'admin',
         loadChildren: () => import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES),
-        canActivate: [authAdminGuard] 
+        canActivate: [authAdminGuard]
 
     },
     {

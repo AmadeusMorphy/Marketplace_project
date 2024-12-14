@@ -15,7 +15,7 @@ export class AuthService {
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
-    private _httpClient: HttpClient, 
+    private _httpClient: HttpClient,
     private _router: Router,
     private _messageService: MessageService
   ) { }
@@ -30,13 +30,13 @@ export class AuthService {
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
         localStorage.setItem('fullName', User.fullName);
+        this.isAuthenticatedSubject.next(true);
 
         this._messageService.add({
           severity: 'success',
           summary: 'Logged in'
         });
 
-        this.isAuthenticatedSubject.next(true);
       }, (error) => {
         console.error('Error during login:', error);
         this._messageService.add({
@@ -93,7 +93,6 @@ export class AuthService {
       })
     )
   }
-
 
   async updateAuthState(isAuthenticated: boolean) {
     this.isAuthenticatedSubject.next(isAuthenticated);

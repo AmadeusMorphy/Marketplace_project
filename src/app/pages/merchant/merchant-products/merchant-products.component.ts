@@ -37,25 +37,42 @@ export class MerchantProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.getMerchantProducts();
+    this.getMerchantProducts();
   }
 
   getMerchantProducts() {
     this.isLoading = true;
-    if(this.isBrowser) {
-    this._merchantService.getMerchantProducts().subscribe(
-      (res: any) => {
-        this.products = res.products;
-        console.log('Merchant products:', res);
-        this.isLoading = false;
-        this._cdr.detectChanges();
-      },
-      (error) => {
-        this.isLoading = false;
-        console.error('Error fetching merchant products:', error);
-      }
-    );
+    if (this.isBrowser) {
+      this._merchantService.getMerchantProducts().subscribe(
+        (res: any) => {
+          this.products = res.products;
+          console.log('Merchant products:', res);
+          this.isLoading = false;
+          this._cdr.detectChanges();
+        },
+        (error) => {
+          this.isLoading = false;
+          console.error('Error fetching merchant products:', error);
+        }
+      );
+    }
   }
+
+  getProductsAfter() {
+    if (this.isBrowser) {
+      this._merchantService.getMerchantProducts().subscribe(
+        (res: any) => {
+          let updatedProducts = res.products;
+          if (updatedProducts !== this.products) {
+            this.isLoading = true;
+            this.products === updatedProducts;
+            this.isLoading = false;
+          } else {
+            return;
+          }
+        }
+      )
+    }
   }
 
   isNewProduct(product: any): boolean {

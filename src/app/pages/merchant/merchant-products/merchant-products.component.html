@@ -50,7 +50,8 @@
 
     </div>
 
-    <div *ngIf="!isLoading && products?.length === 0" class="no-products h-30rem flex justify-content-center align-items-center">
+    <div *ngIf="!isLoading && products?.length === 0"
+        class="no-products h-30rem flex justify-content-center align-items-center">
         <p>You have no products!</p>
     </div>
 
@@ -135,5 +136,5 @@
         </div> -->
 </div>
 
-<app-merchant-add-product [(visible)]="addProductDialog"
-    (visibleChange)="getMerchantProducts()"></app-merchant-add-product>
+<app-merchant-add-product [(visible)]="addProductDialog" (visibleChange)="addProductDialog = false"
+    (productAdded)="getMerchantProducts()"></app-merchant-add-product>

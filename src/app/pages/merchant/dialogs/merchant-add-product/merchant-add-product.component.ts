@@ -194,8 +194,8 @@ export class MerchantAddProductComponent implements OnInit {
 
   closeDialog() {
     this.visible = false;
-    this.visibleChange.emit(false);
     this.resetForm();
+    this.visibleChange.emit(false);
   }
 
   resetForm() {

@@ -20,6 +20,13 @@ $low-stock-color: #ffa500;
 
   &:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+    .product-image {
+      .img-container img {
+        transform: scale(1.05) translateZ(10px);
+        transition: transform 0.3s ease;
+      }
+    }
   }
 
   .product-image {
@@ -38,6 +45,7 @@ $low-stock-color: #ffa500;
         border-radius: 12px;
         height: 100%;
         width: 100%;
+        transition: .3s;
         object-fit: inherit;
       }
     }

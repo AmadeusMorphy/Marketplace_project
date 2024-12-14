@@ -35,7 +35,7 @@ export class LoginComponent {
 
   isLoggingIn = false;
   loggedIn = false;
-  
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', (Validators.required, Validators.email)),
     password: new FormControl('', (Validators.required))
@@ -48,18 +48,18 @@ export class LoginComponent {
     private _authService: AuthService,
     private _messagesService: MessageService,
     private _navbarService: NavbarService
-  ) { 
+  ) {
     this.isBrowser = isPlatformBrowser(this.platformId)
   }
 
   ngOnInit(): void {
-    if(this.isBrowser) {
+    if (this.isBrowser) {
 
       this._navbarService.checkTheme();
 
       this._navbarService.isDarkMode$.subscribe(
         res => {
-          if(res === true) {
+          if (res === true) {
             this.isDarkMode = true;
           } else {
             this.isDarkMode = false;
@@ -68,7 +68,7 @@ export class LoginComponent {
       )
       this._cdr.detectChanges();
     }
-    
+
   }
   onSubmit() {
     this.isLoggingIn = true;
@@ -81,17 +81,11 @@ export class LoginComponent {
         this.loggedIn = true;
 
         if (res.user.userType === 'customer') {
-          setTimeout(() => {
-            this._router.navigate(['/']);
-          }, 1300);
+          this._router.navigate(['/']);
         } else if (res.user.userType === 'merchant') {
-          setTimeout(() => {
-            this._router.navigate(['/merchant/dashboard']);
-          }, 1300);
+          this._router.navigate(['/merchant/dashboard']);
         } else if (res.user.userType === 'admin') {
-          setTimeout(() => {
-            this._router.navigate(['/admin']);
-          }, 1300);
+          this._router.navigate(['/admin']);
         }
       }, () => {
         this.isLoggingIn = false;
