@@ -24,7 +24,7 @@
         </div>
 
         <div class="title m-5 flex flex-column justify-content-center gap-2">
-            <div class="flex justify-content-center">
+            <div class="flex justify-content-center mt-4">
                 <p-skeleton *ngIf="isLoading || uploadingLogo || uploadingBg" height="25px" width="80px"></p-skeleton>
             </div>
             <div class="flex justify-content-center align-items-center gap-2">
@@ -64,7 +64,8 @@
                 <p class="text-2xl font-medium m-auto">{{stores.name}}</p>
             </div>
             <div class="location flex justify-content-center align-items-center gap-2">
-                <img [src]="'https://flagcdn.com/' + stores.location.code + '.svg'" height="20px" width="20px" class="flag" alt="">
+                <img [src]="'https://flagcdn.com/' + stores.location.code + '.svg'" height="20px" width="20px"
+                    class="flag" alt="">
                 <span class="text-gray-400">{{stores.location.country}}</span>
             </div>
         </div>

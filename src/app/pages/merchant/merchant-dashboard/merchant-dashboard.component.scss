@@ -199,7 +199,7 @@
 
   .metrics-grid,
   .charts-section {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
@@ -210,16 +210,16 @@
 
 @media (max-width: "1200px") {
   .charts-group {
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
   }
 
   .line-container {
-      width: 100% !important;
+    width: 100% !important;
   }
 
   .pie-container {
-      width: 100% !important;
+    width: 100% !important;
   }
 }
 

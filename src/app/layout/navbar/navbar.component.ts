@@ -16,6 +16,7 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { FormsModule } from '@angular/forms';
 import { NavbarService } from '../../services/navbar/navbar.service';
+import { ThemeService } from '../../services/theme/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -57,15 +58,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
-    private _navbarService: NavbarService
-  ) { 
+    private _navbarService: NavbarService,
+    private _themeService: ThemeService
+  ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnInit() {
     this.isThemeLoading = true;
 
-    if(this.isBrowser) {
+    if (this.isBrowser) {
       this._navbarService.checkTheme();
 
       const theme = localStorage.getItem('theme');
@@ -73,8 +75,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         'app-theme',
       ) as HTMLLinkElement;
 
-      if(theme) {
-        if(theme === 'light') {
+      if (theme) {
+        if (theme === 'light') {
           linkElement.href = 'theme-light.css';
           this.isDarkMode = false;
           this.isThemeLoading = false;
@@ -118,7 +120,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this._navbarService.toggleDarkMode()
       this._navbarService.isDarkMode$.subscribe(
         res => {
-          if(res === true) {
+          if (res === true) {
             this.isDarkMode = true;
           } else {
             this.isDarkMode = false;
@@ -126,7 +128,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this._cdr.detectChanges()
         }
       )
-      const theme = localStorage.getItem('theme');
 
       const linkElement = this.#document.getElementById(
         'app-theme',
@@ -138,6 +139,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
         linkElement.href = 'theme-light.css';
         localStorage.setItem('theme', 'light');
       }
+
+      const theme = localStorage.getItem('theme');
+      const updatedTheme = {
+        theme: theme
+      }
+      this._themeService.updateTheme(updatedTheme).subscribe(
+        (res: any) => {
+          console.log('theme updated: ', res);
+
+        }, (error) => {
+          console.error("something wrong: ", error);
+
+        }
+      );
     }
   }
 

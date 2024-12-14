@@ -30,6 +30,7 @@ export class AuthService {
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
         localStorage.setItem('fullName', User.fullName);
+        localStorage.setItem('theme', User.theme);
         this.isAuthenticatedSubject.next(true);
 
         this._messageService.add({

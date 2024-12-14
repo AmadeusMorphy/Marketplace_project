@@ -63,9 +63,9 @@ export class MerchantDashboardComponent {
         }
       ]
     };
-    
+
     this.lineOptions = {
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       aspectRatio: 0.6,
       plugins: {
         legend: {
@@ -104,7 +104,7 @@ export class MerchantDashboardComponent {
         }
       ]
     };
-    
+
     this.pieOptions = {
       plugins: {
         legend: {
@@ -153,7 +153,7 @@ export class MerchantDashboardComponent {
 
   initializeChartOptions() {
     this.chartOptions = {
-      responsive: true,
+      responsive: false,
       plugins: {
         legend: {
           position: 'top',
