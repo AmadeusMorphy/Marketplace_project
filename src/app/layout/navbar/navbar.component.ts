@@ -144,15 +144,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       const updatedTheme = {
         theme: theme
       }
-      this._themeService.updateTheme(updatedTheme).subscribe(
-        (res: any) => {
-          console.log('theme updated: ', res);
-
-        }, (error) => {
-          console.error("something wrong: ", error);
-
-        }
-      );
+      this._themeService.updateTheme(updatedTheme).subscribe();
     }
   }
 

@@ -7,7 +7,7 @@ import { Sidebar, SidebarModule } from 'primeng/sidebar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AuthService } from '../../auth/auth.service';
 import { Subject, Subscription } from 'rxjs';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 interface MenuItem {
   label: string;
@@ -26,8 +26,7 @@ interface MenuItem {
     ButtonModule,
     RippleModule,
     AvatarModule,
-    StyleClassModule,
-    RouterLink
+    StyleClassModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
@@ -224,8 +223,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.isAuthSupscription = this._authService.isAuthenticated$.subscribe(
         res => {
           this.isAuthenticated = res;
-          console.log("Sidebar auth: ", this.isAuthenticated);
-
           this.checkUser();
           this._cdr.detectChanges();
         }

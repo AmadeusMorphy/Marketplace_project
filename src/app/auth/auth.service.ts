@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { MerchantService } from '../pages/merchant/merchant.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthService {
   constructor(
     private _httpClient: HttpClient,
     private _router: Router,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private _merchantService: MerchantService
   ) { }
 
   onLogin(loginForm: any): Observable<any> {
@@ -29,8 +31,18 @@ export class AuthService {
         localStorage.setItem('userId', User.id);
         localStorage.setItem('userType', User.userType);
         localStorage.setItem('email', User.email);
-        localStorage.setItem('fullName', User.fullName);
         localStorage.setItem('theme', User.theme);
+        localStorage.setItem('fullName', User.fullName);
+
+        const userType = localStorage.getItem('userType');
+
+        if (userType === 'merchant') {
+          this._merchantService.getMerchantProfile().subscribe(
+            (res: any) => {
+              localStorage.setItem('fullName', res.full_name);
+            }
+          )
+        }
         this.isAuthenticatedSubject.next(true);
 
         this._messageService.add({
