@@ -2,7 +2,7 @@
 
     <div class="cards-container w-full flex flex-wrap justify-content-start gap-8 mt-5" *ngIf="!isLoading"
         [@fadeAnimation] [@.disabled]="isLoading">
-        @for (store of stores; track store._id) {
+        @for (store of stores; track store.id) {
 
         <div class="profile-card">
             <div class="profile-card-header relative">
