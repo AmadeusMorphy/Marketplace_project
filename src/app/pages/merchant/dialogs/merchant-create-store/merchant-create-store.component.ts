@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { MerchantService } from '../../merchant.service';
+import { MerchantService } from '../../../../services/merchant/merchant.service';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { fadeAnimation } from '../../../../widgets/animations/fade.animation';
@@ -97,7 +97,7 @@ export class MerchantCreateStoreComponent implements OnInit {
   }
 
   onCountryChange(event: any) {
-    
+
     this.selectedCountry = event.value;
     console.log(this.selectedCountry);
 

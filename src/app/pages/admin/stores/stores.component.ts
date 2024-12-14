@@ -2,7 +2,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { fadeAnimation } from '../../../widgets/animations/fade.animation';
-import { AdminService } from '../admin.service';
+import { AdminService } from '../../../services/admin/admin.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';

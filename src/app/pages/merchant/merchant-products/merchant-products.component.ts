@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformServer } from '@angular/common';
 import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { MerchantService } from '../merchant.service';
+import { MerchantService } from '../../../services/merchant/merchant.service';
 import { MerchantAddProductComponent } from "../dialogs/merchant-add-product/merchant-add-product.component";
 import { isPlatformBrowser } from '@angular/common';
 import { fadeAnimation } from '../../../widgets/animations/fade.animation';

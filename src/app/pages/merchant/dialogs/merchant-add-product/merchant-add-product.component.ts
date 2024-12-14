@@ -13,7 +13,7 @@ import { ChipModule } from 'primeng/chip';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MultiSelectModule } from 'primeng/multiselect';
 
-import { MerchantService } from '../../merchant.service';
+import { MerchantService } from '../../../../services/merchant/merchant.service';
 import { ImagesService } from '../../../../services/images/images.service';
 import { COUNTRIES } from '../../../../widgets/countries';
 import { SkeletonModule } from 'primeng/skeleton';

@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { MerchantService } from '../merchant.service';
+import { MerchantService } from '../../../services/merchant/merchant.service';
 import { MerchantCreateStoreComponent } from "../dialogs/merchant-create-store/merchant-create-store.component";
 import { DialogModule } from 'primeng/dialog';
 import { SkeletonModule } from 'primeng/skeleton';

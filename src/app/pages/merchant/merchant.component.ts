@@ -6,7 +6,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ButtonModule } from 'primeng/button';
-import { MerchantService } from './merchant.service';
+import { MerchantService } from '../../services/merchant/merchant.service';
 import { MerchantPortalComponent } from "./merchant-portal/merchant-portal.component";
 import { SidenavComponent } from './sidenav/sidenav.component';
 
@@ -26,7 +26,7 @@ interface SideNavToggle {
     ConfirmPopupModule,
     MerchantPortalComponent,
     SidenavComponent
-],
+  ],
   templateUrl: './merchant.component.html',
   styleUrl: './merchant.component.scss',
   animations: [fadeAnimation],
@@ -35,7 +35,7 @@ interface SideNavToggle {
 export class MerchantComponent implements OnInit {
   private isBrowser: boolean;
   #document = inject(DOCUMENT);
-  
+
   items: MenuItem[] | undefined;
 
   isSideNavCollapsed = false;
@@ -51,14 +51,14 @@ export class MerchantComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.isBrowser) {
+    if (this.isBrowser) {
       const theme = localStorage.getItem('theme');
       const linkElement = this.#document.getElementById(
         'app-theme',
       ) as HTMLLinkElement;
 
-      if(theme) {
-        if(theme === 'light') {
+      if (theme) {
+        if (theme === 'light') {
           linkElement.href = 'theme-light.css';
         } else {
           linkElement.href = 'theme-dark.css';
@@ -72,16 +72,17 @@ export class MerchantComponent implements OnInit {
   }
 
   getMerchantData() {
-    if(this.isBrowser){
-    this._merchantService.getMerchantProfile().subscribe(
-      (res: any) => {
-        this._merchantService.getMerchantStores().subscribe(
-          (storesRes: any) => {
-            // Handle stores data if needed
-          }
-        );
-      }
-    );}
+    if (this.isBrowser) {
+      this._merchantService.getMerchantProfile().subscribe(
+        (res: any) => {
+          this._merchantService.getMerchantStores().subscribe(
+            (storesRes: any) => {
+              // Handle stores data if needed
+            }
+          );
+        }
+      );
+    }
   }
 
   onToggleSideNav(data: SideNavToggle): void {

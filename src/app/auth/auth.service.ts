@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { MerchantService } from '../pages/merchant/merchant.service';
+import { MerchantService } from '../services/merchant/merchant.service';
 
 @Injectable({
   providedIn: 'root'
