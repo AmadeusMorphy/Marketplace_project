@@ -214,6 +214,13 @@
         flex-direction: column;
     }
 
+    .pie, .bar, .line {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
     .line-container {
         width: 100% !important;
     }
@@ -238,3 +245,4 @@
 // .metric-revenue {
 //   background: #8b5cf673;
 // }
+

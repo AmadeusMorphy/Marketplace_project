@@ -20,12 +20,14 @@ import { error } from 'console';
 export class HomeComponent implements OnInit{
 
   private isServer: boolean;
+  private isBrowser: boolean;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
     private _ipLocationService: IpLocationService
   ) {
-    this.isServer = isPlatformServer(this.platformId)
+    this.isServer = isPlatformServer(this.platformId);
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {

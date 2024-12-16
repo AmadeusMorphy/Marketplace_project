@@ -25,7 +25,11 @@ export class DashboardComponent {
   transactions: any;
   chartOptions: any;
 
+  data: any;
+  options: any;
+  basicData: any;
   lineData: any;
+  basicOptions: any;
   lineOptions: any;
   pieData: any;
   pieOptions: any;
@@ -35,13 +39,93 @@ export class DashboardComponent {
     this.initializeTransactions();
     this.initializeChartOptions();
 
+    /* PIE CHART - Revenue by Merchants */
+    this.data = {
+      labels: ['Merchant A', 'Merchant B', 'Merchant C'],
+      datasets: [
+        {
+          data: [54000, 32500, 70200],
+          backgroundColor: ['#5A8DEE', '#F86666', '#6ECB63'], // Muted blue, red, and green
+          hoverBackgroundColor: ['#486FB7', '#DC5B5B', '#5AA551'] // Slightly darker tones for hover
+        }
+      ]
+    };
+
+    this.options = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            color: '#FFFFFF' // White text for better visibility on dark backgrounds
+          }
+        }
+      }
+    };
+
+    /* BAR CHART */
+    this.basicData = {
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      datasets: [
+        {
+          label: 'Store A',
+          data: [12000, 15000, 18000, 9000],
+          backgroundColor: 'rgba(90, 141, 238, 0.7)', // Muted blue with transparency
+          borderColor: 'rgba(90, 141, 238, 1)', // Solid blue
+          borderWidth: 1
+        },
+        {
+          label: 'Store B',
+          data: [10000, 14000, 10000, 8000],
+          backgroundColor: 'rgba(248, 102, 102, 0.7)', // Muted red with transparency
+          borderColor: 'rgba(248, 102, 102, 1)', // Solid red
+          borderWidth: 1
+        },
+        {
+          label: 'Store C',
+          data: [20000, 18000, 22000, 12000],
+          backgroundColor: 'rgba(108, 203, 99, 0.7)', // Muted green with transparency
+          borderColor: 'rgba(108, 203, 99, 1)', // Solid green
+          borderWidth: 1
+        }
+      ]
+    };
+
+    this.basicOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#FFFFFF' // White for better contrast
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#DDDDDD' // Light gray for x-axis labels
+          },
+          grid: {
+            color: '#333333' // Subtle dark gridlines
+          }
+        },
+        y: {
+          ticks: {
+            color: '#DDDDDD' // Light gray for y-axis labels
+          },
+          grid: {
+            color: '#333333' // Subtle dark gridlines
+          }
+        }
+      }
+    };
+
+    /* LINE CHART */
     this.lineData = {
       labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
           type: 'line',
           label: 'Apple',
-          borderColor: '#8BA9FF',
+          borderColor: '#5A8DEE', // Muted blue
           borderWidth: 2,
           fill: false,
           tension: 0.4,
@@ -50,15 +134,15 @@ export class DashboardComponent {
         {
           type: 'bar',
           label: 'Samsung',
-          backgroundColor: '#A8DFC1',
+          backgroundColor: '#F86666', // Muted red
           data: [3000, 4000, 5000, 3000, 2000, 4000, 5000],
-          borderColor: '#67e09e',
+          borderColor: '#DC5B5B', // Slightly darker red for borders
           borderWidth: 2
         },
         {
           type: 'bar',
           label: 'Nike',
-          backgroundColor: '#66D2D6',
+          backgroundColor: '#F9C74F', // Muted yellow
           data: [2000, 1000, 4000, 3000, 5000, 4000, 3000]
         }
       ]
@@ -70,51 +154,30 @@ export class DashboardComponent {
       plugins: {
         legend: {
           labels: {
-            color: '#444444' // Darker gray for legend text
+            color: '#FFFFFF' // White for legend text
           }
         }
       },
       scales: {
         x: {
           ticks: {
-            color: '#333333' // Darker gray for x-axis labels
+            color: '#DDDDDD' // Light gray
           },
           grid: {
-            color: '#CCCCCC' // Light gray gridlines
+            color: '#333333' // Subtle gridlines
           }
         },
         y: {
           ticks: {
-            color: '#333333' // Darker gray for y-axis labels
+            color: '#DDDDDD' // Light gray
           },
           grid: {
-            color: '#CCCCCC' // Light gray gridlines
+            color: '#333333' // Subtle gridlines
           }
         }
       }
     };
 
-    this.pieData = {
-      labels: ['Merchant A', 'Merchant B', 'Merchant C'],
-      datasets: [
-        {
-          data: [54000, 32500, 70200],
-          backgroundColor: ['#9BAEDB', '#FFD866', '#88D4B1'],
-          hoverBackgroundColor: ['#8197C7', '#FFC247', '#70B899']
-        }
-      ]
-    };
-
-    this.pieOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            color: '#4A5568'
-          }
-        }
-      }
-    };
   }
 
   initializeSalesData() {
