@@ -1,6 +1,6 @@
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -59,7 +59,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
     private _navbarService: NavbarService,
-    private _themeService: ThemeService
+    private _themeService: ThemeService,
+    private _router: Router
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -115,6 +116,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  goHome() {
+    this._router.navigate(['/home'])
+  }
   toggleLightDark() {
     if (this.isBrowser) {
       this._navbarService.toggleDarkMode()
