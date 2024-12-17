@@ -17,7 +17,7 @@ import { error } from 'console';
   styleUrl: './home.component.scss',
   animations: [fadeAnimation]
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   private isServer: boolean;
   private isBrowser: boolean;
@@ -31,9 +31,10 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.isBrowser){
+    if (this.isBrowser) {
       this.getAllUserData();
-  }}
+    }
+  }
 
 
   getAllUserData() {

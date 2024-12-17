@@ -72,7 +72,7 @@ export class MerchantProfileRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.isBrowser) {
+    if (this.isBrowser) {
       this.countries = COUNTRIES;
     }
   }
@@ -89,7 +89,7 @@ export class MerchantProfileRegisterComponent implements OnInit {
             severity: 'success',
             summary: 'Image Uploaded',
             detail: 'Profile image uploaded successfully'
-          });          
+          });
         },
         (error) => {
           this.isPfpImgUploading = false;
@@ -139,7 +139,7 @@ export class MerchantProfileRegisterComponent implements OnInit {
     this.registerForm.get('pfpImg')?.setValue('');
     this._cdr.detectChanges();
   }
-  
+
   loadBgImage() {
     this.isBgImgUploading = false;
   }
@@ -162,13 +162,16 @@ export class MerchantProfileRegisterComponent implements OnInit {
     return this.registerForm.invalid;
   }
 
-  onSubmit() { 
+  onSubmit() {
+    this.isRegistering = true;
     console.log(this.registerForm.value);
-    
-    this._authService.onMerchantRegister(this.registerForm.value).subscribe();
-
-
-    // this._authService.onMerchantRegister(this.registerForm.value).subscribe();
+    this._authService.onMerchantRegister(this.registerForm.value).subscribe({
+      next: () => {
+        this.isRegistering = false;
+      }, error: () => {
+        this.isRegistering = false;
+      }
+    });
   }
 
 
