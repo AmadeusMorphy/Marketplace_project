@@ -41,6 +41,11 @@ export class MerchantService {
     return of(null);
   }
 
+  getMerchantUser(): Observable<any> {
+    const merchantId = localStorage.getItem('userId');
+    return this._httpClient.get(`${environment.server}users/profile?id=${merchantId}`, { headers: this.getHeaders()});
+  }
+
   createMerchantStore(storeForm: any): Observable<any> {
     if (this.isBrowser) {
 

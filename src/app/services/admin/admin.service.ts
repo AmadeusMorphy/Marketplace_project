@@ -31,18 +31,42 @@ export class AdminService {
     });
   }
 
-  getStores(): Observable<any> {
 
-    if (this.isBrowser) {
-      return this._httpClient.get(`${environment.server}stores/all`, { headers: this.getHeaders() })
-    }
-    return of(null);
+  /***********************MERCHANTS*****************************/
+
+  getAllUsers(): Observable<any> {
+    return this._httpClient.get(`${environment.server}users`, { headers: this.getHeaders()});
+  }
+
+  getUserById(userId: any): Observable<any> {
+    return this._httpClient.get(`${environment.server}users/profile?id=${userId}`, { headers: this.getHeaders()});
+  }
+
+  /***********************************************************/
+
+
+  /***********************MERCHANTS*****************************/
+  
+  getAllMerchants(): Observable<any> {
+    return this._httpClient.get(`${environment.server}merchants`, { headers: this.getHeaders()});
+  }
+
+
+  /***********************************************************/
+
+
+  /***********************STORES*****************************/
+
+  getStores(): Observable<any> {
+    return this._httpClient.get(`${environment.server}stores/all`, { headers: this.getHeaders() });
   }
 
   updateStore(storeId: any, storeData: any): Observable<any> {
-    if (this.isBrowser) {
       return this._httpClient.put(`${environment.server}stores?id=${storeId}`, storeData, { headers: this.getHeaders() });
-    }
-    return of(null);
   }
+
+  /***********************************************************/
+
+
+
 }

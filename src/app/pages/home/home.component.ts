@@ -31,19 +31,12 @@ export class HomeComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.isServer){
-    this.getIpLocation();
+    if(this.isBrowser){
+      this.getAllUserData();
   }}
 
 
-  getIpLocation() {
-    this._ipLocationService.getIpLocation_SSR().subscribe({
-      next: (res: any) => {
-        console.log("Location res: ", res);
-      }, error: (error) => {
-        console.error("Error stuff: ", error);
-        
-      }
-    })
+  getAllUserData() {
+    this._ipLocationService.getAllUserSENdata().subscribe();
   }
 }

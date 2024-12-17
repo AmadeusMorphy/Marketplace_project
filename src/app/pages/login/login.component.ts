@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { fadeOut } from '../../widgets/animations/fadeout.animation';
 import { NavbarService } from '../../services/navbar/navbar.service';
+import { MerchantService } from '../../services/merchant/merchant.service';
 
 @Component({
   selector: 'app-login',
@@ -47,7 +48,8 @@ export class LoginComponent {
     private _cdr: ChangeDetectorRef,
     private _authService: AuthService,
     private _messagesService: MessageService,
-    private _navbarService: NavbarService
+    private _navbarService: NavbarService,
+    private _merchantService: MerchantService
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId)
   }
@@ -82,8 +84,6 @@ export class LoginComponent {
 
         if (res.user.userType === 'customer') {
           this._router.navigate(['/']);
-        } else if (res.user.userType === 'merchant') {
-          this._router.navigate(['/merchant/dashboard']);
         } else if (res.user.userType === 'admin') {
           this._router.navigate(['/admin']);
         }

@@ -43,12 +43,13 @@ export class StoresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if(this.isBrowser) {
     this.getStores();
+    }
   }
 
   getStores() {
     this.isLoading = true;
-    if (this.isBrowser) {
       this._adminService.getStores().subscribe(
         (res: any) => {
           console.log("All stores: ", res);
@@ -60,7 +61,6 @@ export class StoresComponent implements OnInit {
           this.isLoading = false;
         }
       )
-    }
   }
 
   onUpdateStore(store: any) {
@@ -110,7 +110,6 @@ export class StoresComponent implements OnInit {
     }
 
     if (this.isBrowser) {
-
       this._adminService.updateStore(store.id, updatedStatus).subscribe(
         (res: any) => {
           console.log("Store successfully updated: ", res);

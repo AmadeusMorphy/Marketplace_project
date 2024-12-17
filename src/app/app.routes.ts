@@ -28,6 +28,10 @@ export const routes: Routes = [
                 path: 'merchant-register',
                 loadComponent: () => import('./pages/merchant-register/merchant-register.component').then(m => m.MerchantRegisterComponent)
             },
+            {
+                path: 'merchant-profile-register',
+                loadComponent: () => import('./pages/merchant-register/merchant-profile-register/merchant-profile-register.component').then(m => m.MerchantProfileRegisterComponent)
+            },
         ]
     },
     {

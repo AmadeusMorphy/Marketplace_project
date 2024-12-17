@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { fadeAnimation } from '../../widgets/animations/fade.animation';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -32,7 +32,8 @@ import { Router } from '@angular/router';
   providers: [MessageService],
   animations: [fadeAnimation]
 })
-export class MerchantRegisterComponent {
+export class MerchantRegisterComponent implements OnInit{
+  private isBrowser: boolean;
 
   registerForm: FormGroup;
   showPassword = false;
@@ -43,11 +44,14 @@ export class MerchantRegisterComponent {
   isRegistering = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: object,
     private _messageService: MessageService,
     private _authService: AuthService,
     private _cdr: ChangeDetectorRef,
     private _router: Router
   ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+
     this.registerForm = new FormGroup({
       fullName: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -133,51 +137,24 @@ export class MerchantRegisterComponent {
       email: form.email,
       password: form.password,
       userType: 'merchant',
-      fullName: form.fullName
+      fullName: form.fullName,
+      status: 'Pending'
     }
 
-    const merchantData = {
-      email: form.email,
-      full_name: form.fullName,
-      country: form.country
-    }
+    this._authService.onRegister(registerData).subscribe({
+      next: (res: any) => {
 
-    this._authService.onRegister(registerData).subscribe(
-      (res: any) => {
-        const token = res.token;
-
-        const headers = new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+        this._messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `${res.user.fullName} has registed an account!`
         })
 
-        this._authService.onMerchantRegister(merchantData, headers).subscribe(
-          () => {
-            this.isRegistering = false;
-            this.registerForm.reset();
+        setTimeout(() => {
+          this._router.navigate(['/login']);
+        }, 1200);
 
-            this._messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Registered successfully!'
-            })
-
-            setTimeout(() => {
-              this._router.navigate(['/login'])
-            }, 1200);
-            this._cdr.detectChanges();
-          }, (error) => {
-            this.isRegistering = false;
-            console.error("Something wrong happened: ", error);
-
-            this._messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Something wrong happened!'
-            })
-          }
-        )
-      }, (error) => {
+      }, error: (error) => {
         this.isRegistering = false;
         console.error("Error creating the user: ", error);
         this._messageService.add({
@@ -186,6 +163,6 @@ export class MerchantRegisterComponent {
           detail: 'Something went wrong!'
         })
       }
-    )
+    })
   }
 }

@@ -66,16 +66,16 @@
         <!-- Charts Section -->
         <div class="charts">
             <div class="flex justify-content-center align-items-center w-full mt-3">
-                <div class="grid justify-content-between mainDashboard" style="width: -webkit-fill-available;">
+                <div class="grid justify-content-between m-auto" style="width: -webkit-fill-available; gap: 1rem;">
     
-                    <div class="pie w-26rem h-29rem mt-3 mb-4">
+                    <div class="pieDiv mt-3 mb-4" style="height: 32rem; width: 29rem;">
                         <div class="chartTitle flex justify-content-center align-items-center">
                             <span class="text-500 font-medium mb-3">Merchants Revenue</span>
                         </div>
-                        <p-chart type="pie" [data]="data" [options]="options" />
+                        <p-chart type="pie" [data]="data" [style]="{width: '100%', height: '100%'}" [options]="options" />
                     </div>
-    
-                    <div class="bar mt-3 mb-4" style="width: 60rem; height: 50rem;">
+
+                    <div class="barDiv mt-3 mb-4" style="width: 53rem; height: 32rem;">
                         <div class="chartTitle flex justify-content-center align-items-center">
                             <span class="text-500 font-medium mb-3">Stores Sales</span>
                         </div>

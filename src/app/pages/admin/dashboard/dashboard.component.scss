@@ -230,19 +230,20 @@
     }
 }
 
+.pieDiv, .barDiv {
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    padding: 20px;
+}
 
-// .metric-sales {
-//   background: #3b82f647;
-// }
+.pieDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-// .metric-orders {
-//   background: #f43f5e36;
-// }
-// .metric-customers {
-
-//   background: #10b98140;
-// }
-// .metric-revenue {
-//   background: #8b5cf673;
-// }
-
+.barDiv {
+    
+}
