@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: '/Marketplace_project/',
   entryPoints: {
     '': () => import('./main.server.mjs')
   },
