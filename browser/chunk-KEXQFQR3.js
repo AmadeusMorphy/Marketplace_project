@@ -1,0 +1,1 @@
+import{Pb as o,cb as n,wb as s,xb as a}from"./chunk-TFNTKD25.js";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-merchant-settings"]],decls:2,vars:0,template:function(e,m){e&1&&(s(0,"p"),o(1,"merchant-settings works!"),a())},encapsulation:2})};export{i as MerchantSettingsComponent};

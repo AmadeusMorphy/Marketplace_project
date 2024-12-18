@@ -1,1 +1,0 @@
-import{W as o,q as s}from"./chunk-NBA27GJI.js";import{cb as n}from"./chunk-S34SW62A.js";var a=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=n({type:e,selectors:[["app-merchant-messages"]],decls:0,vars:0,template:function(t,r){},dependencies:[s,o],encapsulation:2})};export{a as MerchantMessagesComponent};

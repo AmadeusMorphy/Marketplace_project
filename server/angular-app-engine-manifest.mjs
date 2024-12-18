@@ -1,7 +1,6 @@
 
 export default {
   basePath: '/Marketplace_project/',
-  entryPoints: {
-    '': () => import('./main.server.mjs')
-  },
+  entryPoints: new Map([['', () => import('./main.server.mjs')]]),
 };
+  
