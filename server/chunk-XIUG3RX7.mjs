@@ -1,2 +1,0 @@
-import './polyfills.server.mjs';
-import{Kb as o,Xa as n,rb as s,sb as a}from"./chunk-26VAK23Y.mjs";import"./chunk-AFOT676I.mjs";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-merchant-settings"]],decls:2,vars:0,template:function(e,m){e&1&&(s(0,"p"),o(1,"merchant-settings works!"),a())},encapsulation:2})};export{i as MerchantSettingsComponent};
