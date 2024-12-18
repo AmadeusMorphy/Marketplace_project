@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:ssr": "ng build && ng run marketplace-project:server",
+    "vercel-install": "npm install --legacy-peer-deps",
     "deploy": "ng deploy --base-href=/Marketplace_project/"
   },
   "private": true,
