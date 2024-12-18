@@ -1,3 +1,10 @@
 {
-  "buildCommand": "npm install --legacy-peer-deps && npm run build"
-}
+    "build": {
+      "commands": [
+        "node scripts/generate-environment.js",
+        "npm install --legacy-peer-deps",
+        "npm run build"
+      ]
+    }
+  }
+  
