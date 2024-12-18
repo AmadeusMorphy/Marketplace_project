@@ -1,10 +1,7 @@
 {
-    "build": {
-      "commands": [
-        "node scripts/generate-environment.js",
-        "npm install --legacy-peer-deps",
-        "npm run build"
-      ]
-    }
-  }
-  
+  "build": [
+    "node scripts/generate-environment.js",
+    "npm install --legacy-peer-deps",
+    "npm run build"
+  ]
+}
